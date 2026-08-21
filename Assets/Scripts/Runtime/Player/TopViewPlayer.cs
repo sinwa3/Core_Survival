@@ -14,6 +14,7 @@ public class TopViewPlayer : MonoBehaviour
     [Header("대시 옵션")]
     [SerializeField] private float _dashMultiple = 3.0f;
     [SerializeField] private float _dashDuration = 0.14f;
+    [SerializeField] private float _dashCooltime = 1.0f;
 
     [Header("참조")]
     [SerializeField] private CharacterController _control;
@@ -31,6 +32,7 @@ public class TopViewPlayer : MonoBehaviour
     #region 내부변수
     private bool _isDashing = false;
     private float _verticalVelocity;
+    private float _dashUseTime = 0.0f;
     #endregion
 
     private void Awake()
@@ -62,13 +64,8 @@ public class TopViewPlayer : MonoBehaviour
     {
         if (_isDashing)
         {
-
-
-
             return;
         }
-
-        
 
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
@@ -76,14 +73,17 @@ public class TopViewPlayer : MonoBehaviour
         Vector3 inputDir = new Vector3(h, 0, v);
         inputDir = inputDir.normalized;
 
-        // 대시 키 누르면 대시
-        if (Input.GetKeyDown(_dashKey) && inputDir.sqrMagnitude > 0.0001f)
-        {
-            StartCoroutine(Co_Dash(inputDir));
-        }
-        
         // 중력 계산
         TickGravity();
+
+        bool canDash = Time.time >= _dashUseTime + _dashCooltime;
+
+        // 대시 키 누르면 대시
+        if (Input.GetKeyDown(_dashKey) && inputDir.sqrMagnitude > 0.0001f && canDash)
+        {
+            _dashUseTime = Time.time;
+            StartCoroutine(Co_Dash(inputDir));
+        }
 
         Vector3 velocity = inputDir * _moveSpeed;
         velocity.y = _verticalVelocity;
@@ -114,7 +114,6 @@ public class TopViewPlayer : MonoBehaviour
             Vector3 velocity = dir * _moveSpeed * _dashMultiple;
 
             // 대시 중에도 떨어지게
-            TickGravity();
             velocity.y = _verticalVelocity;
 
             _control.Move(velocity * Time.deltaTime);
@@ -164,6 +163,24 @@ public class TopViewPlayer : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * 1.5f);
 
+    }
+
+    private void OnGUI()
+    {
+        float cool = _dashUseTime + _dashCooltime - Time.time;
+
+        if (cool < 0.0f)
+        {
+            cool = 0.0f;
+        }
+
+        GUIStyle label = new GUIStyle();
+
+        label.fontSize = 40;
+        label.normal.textColor = Color.white;
+
+        GUI.Box(new Rect(10, 10, 400, 150), "");
+        GUI.Label(new Rect(60, 50, 600, 300), $"[대시 쿨] {cool : 0.00}", label);
     }
 
 }

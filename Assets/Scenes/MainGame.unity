@@ -6135,7 +6135,7 @@ GameObject:
   - component: {fileID: 237502371}
   - component: {fileID: 237502370}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6244,10 +6244,13 @@ MonoBehaviour:
   _moveSpeed: 10
   _avoidSpeed: 5
   _rotateSharpness: 10
+  _dashMultiple: 2.5
+  _dashDuration: 0.14
   _control: {fileID: 0}
   _animator: {fileID: 0}
   _gravity: -9.81
   _groundStick: -2
+  _dashKey: 32
 --- !u!143 &237502371
 CharacterController:
   m_ObjectHideFlags: 0

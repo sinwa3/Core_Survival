@@ -9,22 +9,33 @@ public class TopViewPlayer : MonoBehaviour
     [SerializeField] private float _moveSpeed = 10.0f;
     [SerializeField] private float _rotateSpeed = 10.0f;
 
-
+    [Header("참조")]
+    [SerializeField] private CharacterController _control;
+    [SerializeField] private Animator _animator;
 
     #endregion
 
     #region 내부변수
-    private Rigidbody _rb;
+
     #endregion
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        _control = GetComponent<CharacterController>();
 
-        if (_rb == null)
+        if (_control == null)
         {
-            Debug.LogWarning("리지드바디 null / 확인 필요");
+            Debug.LogWarning("캐릭터 컨트롤러 null / 확인 필요");
             enabled = false;
+
+            return;
+        }
+
+        _animator = GetComponentInChildren<Animator>();
+
+        if (_animator == null)
+        {
+            Debug.LogWarning("애니메이터 null / 확인 필요");
 
             return;
         }

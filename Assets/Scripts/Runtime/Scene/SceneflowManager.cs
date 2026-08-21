@@ -11,7 +11,7 @@ public class SceneflowManager : MonoBehaviour
     #endregion
 
     #region 내부 변수
-
+    public static SceneflowManager instance;
     #endregion
 
     private void Awake()
@@ -28,6 +28,17 @@ public class SceneflowManager : MonoBehaviour
         {
             Debug.LogWarning("트랜지션 스크립트 null / 확인 요망");
         }
+
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning("인스턴스 중복 / 새 인스턴스 생성 불가");
+            Destroy(this.gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
 
         _catalog.SettingDictionary();
     }

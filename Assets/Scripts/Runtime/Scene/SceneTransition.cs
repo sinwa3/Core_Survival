@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SceneTransition : MonoBehaviour
@@ -17,7 +19,7 @@ public class SceneTransition : MonoBehaviour
     #endregion
 
     #region 내부 변수
-
+    private Coroutine _loadingCoroutine;
     #endregion
 
     
@@ -48,6 +50,55 @@ public class SceneTransition : MonoBehaviour
         _loadingText.text = text;
     }
 
+    public IEnumerator Co_Fade(float targetAlpha, float fadeDuration, bool blockRaycast = true)
+    {
+        if (_fadeGroup == null)
+        {
+            Debug.LogWarning("캔버스 그룹 null / 확인 요망");
 
+            yield break;
+        }
+
+        if (_loadingCoroutine != null)
+        {
+            StopCoroutine(_loadingCoroutine);
+            _loadingCoroutine = null;
+        }
+
+        _loadingCoroutine = StartCoroutine(Co_Fade_Internal(targetAlpha, fadeDuration));
+
+        yield return _loadingCoroutine;
+
+        _loadingCoroutine = null;
+    }
+
+    private IEnumerator Co_Fade_Internal(float targetAlpha, float fadeDuration, bool blockRaycast = true)
+    {
+        _fadeGroup.blocksRaycasts = blockRaycast;
+
+        if (fadeDuration <= 0.0f)
+        {
+            _fadeGroup.alpha = targetAlpha;
+            _fadeGroup.blocksRaycasts = (targetAlpha >= 0.99f);
+        }
+        
+        float startAlpha = _fadeGroup.alpha;
+        float time = 0.0f;
+
+        while (time < fadeDuration)
+        {
+            float dt = _useUnscale ? Time.unscaledDeltaTime : Time.deltaTime;
+            time += dt;
+
+            float lerp = Mathf.Clamp01(time / fadeDuration);
+            _fadeGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, lerp);
+
+            yield return null;
+        }
+
+        _fadeGroup.alpha = targetAlpha;
+        _fadeGroup.blocksRaycasts = (targetAlpha >= 0.99f);
+
+    }
 
 }

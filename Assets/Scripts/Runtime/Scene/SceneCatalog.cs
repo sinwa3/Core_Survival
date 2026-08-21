@@ -31,12 +31,8 @@ public class SceneCatalog : MonoBehaviour
 
     public IReadOnlyList<SceneInfo> Scenes => _scenes;
 
-    private void Awake()
-    {
-        SettingDictionary();
-    }
 
-    private void SettingDictionary()
+    public void SettingDictionary()
     {
         if (_scenes == null || _scenes.Count == 0)
         {

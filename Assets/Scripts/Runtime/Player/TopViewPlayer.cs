@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TopViewPlayer : MonoBehaviour
@@ -10,6 +11,10 @@ public class TopViewPlayer : MonoBehaviour
     [SerializeField] private float _avoidSpeed = 5.0f;
     [SerializeField] private float _rotateSharpness = 10.0f;
 
+    [Header("대시 옵션")]
+    [SerializeField] private float _dashMultiple = 3.0f;
+    [SerializeField] private float _dashDuration = 0.14f;
+
     [Header("참조")]
     [SerializeField] private CharacterController _control;
     [SerializeField] private Animator _animator;
@@ -18,9 +23,13 @@ public class TopViewPlayer : MonoBehaviour
     [SerializeField] private float _gravity = -9.81f;
     [SerializeField] private float _groundStick = -2.0f;
 
+    [Header("키 설정")]
+    [SerializeField] private KeyCode _dashKey = KeyCode.Space;
+
     #endregion
 
     #region 내부변수
+    private bool _isDashing = false;
     private float _verticalVelocity;
     #endregion
 
@@ -51,23 +60,71 @@ public class TopViewPlayer : MonoBehaviour
 
     void Update()
     {
+        if (_isDashing)
+        {
+
+
+
+            return;
+        }
+
+        
+
         float v = Input.GetAxisRaw("Vertical");
         float h = Input.GetAxisRaw("Horizontal");
 
         Vector3 inputDir = new Vector3(h, 0, v);
         inputDir = inputDir.normalized;
 
-        bool isAvoid = Input.GetKeyDown(KeyCode.Space);
-        float speed = _moveSpeed * (isAvoid ? _avoidSpeed : 1.0f);
+        // 대시 키 누르면 대시
+        if (Input.GetKeyDown(_dashKey) && inputDir.sqrMagnitude > 0.0001f)
+        {
+            StartCoroutine(Co_Dash(inputDir));
+        }
         
+        // 중력 계산
         TickGravity();
 
-        Vector3 velocity = inputDir * speed;
+        Vector3 velocity = inputDir * _moveSpeed;
         velocity.y = _verticalVelocity;
 
         _control.Move(velocity * Time.deltaTime);
 
+        // 회전 시키기
         TickRotate(inputDir);
+    }
+
+    // 대시 코루틴
+    private IEnumerator Co_Dash(Vector3 dir)
+    {
+        _isDashing = true;
+
+        if (dir.sqrMagnitude < 0.0001f)
+        {
+            yield break;
+        }
+
+        float timer = 0.0f;
+
+        while (timer < _dashDuration)
+        {
+            timer += Time.deltaTime;
+
+            // 대시 이동속도 계산
+            Vector3 velocity = dir * _moveSpeed * _dashMultiple;
+
+            // 대시 중에도 떨어지게
+            TickGravity();
+            velocity.y = _verticalVelocity;
+
+            _control.Move(velocity * Time.deltaTime);
+
+            // 다음 프레임 대기
+            yield return null;    
+        }
+
+        // 대시 종료
+        _isDashing = false;
     }
 
     private void TickRotate(Vector3 inputDir)

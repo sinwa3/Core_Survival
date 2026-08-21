@@ -8,7 +8,6 @@ public class TopViewPlayer : MonoBehaviour
     #region 인스펙터
     [Header("이동 / 회전 속도")]
     [SerializeField] private float _moveSpeed = 10.0f;
-    [SerializeField] private float _avoidSpeed = 5.0f;
     [SerializeField] private float _rotateSharpness = 10.0f;
 
     [Header("대시 옵션")]
@@ -117,6 +116,10 @@ public class TopViewPlayer : MonoBehaviour
             velocity.y = _verticalVelocity;
 
             _control.Move(velocity * Time.deltaTime);
+
+            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+            float sharpness = GetSharpness();
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, _dashMultiple * sharpness);
 
             // 다음 프레임 대기
             yield return null;    

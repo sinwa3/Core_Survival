@@ -26,32 +26,38 @@ public class TopViewPlayer : MonoBehaviour
     [Header("키 설정")]
     [SerializeField] private KeyCode _dashKey = KeyCode.Space;
 
+    [Header("애니메이션")]
+    [SerializeField] private string _paramSpeed = "bSpeed";
+    [SerializeField] private bool _hasDash = true;
+
     #endregion
 
     #region 내부변수
     private bool _isDashing = false;
-    private float _verticalVelocity;
     private float _dashUseTime = 0.0f;
+    private float _verticalVelocity;
+    private int _hashRun;
     #endregion
+
+    private void Reset()
+    {
+        _control = GetComponent<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();
+    }
 
     private void Awake()
     {
-        _control = GetComponent<CharacterController>();
-
         if (_control == null)
         {
-            Debug.LogWarning("캐릭터 컨트롤러 null / 확인 필요");
-            enabled = false;
-
-            return;
+            _control = GetComponent<CharacterController>();
         }
-
-        _animator = GetComponentInChildren<Animator>();
 
         if (_animator == null)
         {
-            Debug.LogWarning("애니메이터 null / 확인 필요");
+            _animator = GetComponentInChildren<Animator>();
         }
+
+        _hashRun = Animator.StringToHash("bSpeed");
     }
 
     void Start()
@@ -89,8 +95,12 @@ public class TopViewPlayer : MonoBehaviour
 
         _control.Move(velocity * Time.deltaTime);
 
+        bool isRunning = (inputDir.sqrMagnitude > 0.001f);
+
         // 회전 시키기
         TickRotate(inputDir);
+
+        _animator.SetBool(_hashRun, isRunning);
     }
 
     // 대시 코루틴

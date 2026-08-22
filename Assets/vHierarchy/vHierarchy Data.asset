@@ -27,6 +27,8 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-5728da45f85ffd24d96039f5c842d38a-791645306-0
         - globalObjectIdString: GlobalObjectId_V1-2-5728da45f85ffd24d96039f5c842d38a-2079483090-0
         - globalObjectIdString: GlobalObjectId_V1-2-5728da45f85ffd24d96039f5c842d38a-315136619-0
+        - globalObjectIdString: GlobalObjectId_V1-2-5728da45f85ffd24d96039f5c842d38a-919132149155446097-125313601
+        - globalObjectIdString: GlobalObjectId_V1-2-5728da45f85ffd24d96039f5c842d38a-919132149155446097-129294310
         values:
         - colorIndex: 5
           iconNameOrGuid: AvatarMask On Icon
@@ -38,3 +40,7 @@ MonoBehaviour:
           iconNameOrGuid: Camera Icon
         - colorIndex: 0
           iconNameOrGuid: Light Icon
+        - colorIndex: 5
+          iconNameOrGuid: 
+        - colorIndex: 5
+          iconNameOrGuid: 

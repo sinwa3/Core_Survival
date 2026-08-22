@@ -22,6 +22,11 @@ MonoBehaviour:
     - 68d0fb5274bf75d40be070f5ed65c7e0
     - ca228732ed5c22648a2263dc91760dbd
     - 594377fde1e3bec45bcdff1d7f24361b
+    - 6c8c4eb0e80f0ac4f8d874fdefe2f66d
+    - cc9f2a6e10bff6a41b5d4eaec16b5db4
+    - 2158087cfcf1d2a4db9e64248a4cd064
+    - e40e7ee862912444c820a8cfd085a714
+    - 5ff39bc67c649f845b764a4877582c5d
     values:
     - colorIndex: 1
       iconNameOrGuid: 
@@ -39,3 +44,13 @@ MonoBehaviour:
       iconNameOrGuid: 
     - colorIndex: 9
       iconNameOrGuid: AnimatorController Icon
+    - colorIndex: 1
+      iconNameOrGuid: 
+    - colorIndex: 3
+      iconNameOrGuid: AnimatorController Icon
+    - colorIndex: 0
+      iconNameOrGuid: Font Icon
+    - colorIndex: 0
+      iconNameOrGuid: TerrainData Icon
+    - colorIndex: 0
+      iconNameOrGuid: Prefab Icon

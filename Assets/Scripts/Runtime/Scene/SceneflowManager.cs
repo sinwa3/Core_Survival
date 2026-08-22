@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneflowManager : MonoBehaviour
 {
@@ -9,11 +11,18 @@ public class SceneflowManager : MonoBehaviour
     [Header("씬 스크립트")]
     [SerializeField] private SceneTransition _transition;
     [SerializeField] private SceneCatalog _catalog;
+
+    [Header("페이드 시간")]
+    [SerializeField] private float _fadeDuration = 0.5f;
+
+    [Header("이미지")]
+    [SerializeField] private Image _loadingBarImage;
     #endregion
 
     #region 내부 변수
     public static SceneflowManager instance;
     private int _currentSceneIndex;
+    private bool _isLoading;
     #endregion
 
     private void Awake()
@@ -38,12 +47,19 @@ public class SceneflowManager : MonoBehaviour
             return;
         }
 
-        instance = this;
+        if (_loadingBarImage == null)
+        {
+            Debug.LogWarning("로딩 바 이미지 null / 인스펙터 확인");
 
+            return;
+        }
+
+        _loadingBarImage.gameObject.SetActive(false);
+
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
 
         _catalog.SettingDictionary();
-
         SetCurrentSceneIndex();
     }
 
@@ -57,7 +73,15 @@ public class SceneflowManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            LoadPrevScene();
+        }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LoadNextScene();
+        }
     }
 
     private void SetCurrentSceneIndex()
@@ -100,7 +124,7 @@ public class SceneflowManager : MonoBehaviour
 
         LoadScene(id);
     }
-    private void LoadNextScene()
+    public void LoadNextScene()
     {
         IReadOnlyList<SceneInfo> scenes = _catalog.Scenes;
 
@@ -144,7 +168,7 @@ public class SceneflowManager : MonoBehaviour
 
         if (_currentSceneIndex < 0)
         {
-            _currentSceneIndex = scenes.Count;
+            _currentSceneIndex = scenes.Count - 1;
         }
 
         string prevSceneName = scenes[_currentSceneIndex].sceneName;
@@ -161,22 +185,75 @@ public class SceneflowManager : MonoBehaviour
 
     public void LoadScene(ESceneID id)
     {
-        if (!_catalog.TryGetSceneName(id, out string name))
+        if (!_catalog.TryGetSceneName(id, out string sceneName))
         {
             Debug.LogWarning("잘못된 ID / 씬 전환 불가");
 
             return;
         }
 
-        if (string.IsNullOrEmpty(name))
+        if (string.IsNullOrEmpty(sceneName))
         {
             Debug.LogWarning("씬 이름 없음 / 씬 전환 불가");
 
             return;
         }
 
-        SceneManager.LoadScene(name);
-        Debug.Log($"씬 {name} 로드 성공");
+        StartCoroutine(Co_LoadScene(sceneName));
+        Debug.Log($"씬 {sceneName} 로드 성공");
+    }
+
+    private IEnumerator Co_LoadScene(string sceneName)
+    {
+        if (_isLoading)
+        {
+            yield break;
+        }
+
+        _isLoading = true;
+
+        _loadingBarImage.gameObject.SetActive(true);
+        _loadingBarImage.fillAmount = 0.0f;
+
+        if (_transition == null)
+        {
+            Debug.LogWarning("트랜지션 스크립트 null 확인 요망");
+
+            yield break;
+        }
+
+        yield return _transition.Co_Fade(1.0f, _fadeDuration);
+
+        _transition.SetLoadingText("Loading...");
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+
+        op.allowSceneActivation = false;
+
+        while (!op.isDone)
+        {
+            float progress = Mathf.Clamp01(op.progress / 0.9f);
+
+            _loadingBarImage.fillAmount = progress;
+
+            if (progress >= 1.0f)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    op.allowSceneActivation = true;
+                }
+            }
+
+            yield return null;
+        }
+
+        _loadingBarImage.gameObject.SetActive(false);
+        _transition.SetLoadingText("");
+        yield return _transition.Co_Fade(0.0f, _fadeDuration);
+
+
+        SetCurrentSceneIndex();
+        _isLoading = false;
     }
 
 }

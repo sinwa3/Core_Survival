@@ -77,6 +77,8 @@ public class SceneTransition : MonoBehaviour
         {
             _fadeGroup.alpha = targetAlpha;
             _fadeGroup.blocksRaycasts = (targetAlpha >= 0.99f);
+
+            yield break;
         }
         
         float startAlpha = _fadeGroup.alpha;

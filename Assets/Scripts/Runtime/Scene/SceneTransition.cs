@@ -10,7 +10,6 @@ public class SceneTransition : MonoBehaviour
     #region 인스펙터
     [Header("페이드 옵션")]
     [SerializeField] private CanvasGroup _fadeGroup;
-    [SerializeField] private float _fadeDuration = 1.0f;
     [SerializeField] private bool _useUnscale = true;
 
     [Header("로딩 텍스트")] 
@@ -48,7 +47,7 @@ public class SceneTransition : MonoBehaviour
         _loadingText.text = text;
     }
 
-    public IEnumerator Co_Fade(float targetAlpha, float fadeDuration, bool blockRaycast = true)
+    public IEnumerator Co_Fade(float targetAlpha, float fadeDuration = 0.5f, bool blockRaycast = true)
     {
         if (_fadeGroup == null)
         {

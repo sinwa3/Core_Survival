@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum ESceneID
 {
+    Boot,
     Title,
     MainGame,
     Result

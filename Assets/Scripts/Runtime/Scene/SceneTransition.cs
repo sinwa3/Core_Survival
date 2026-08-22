@@ -22,8 +22,6 @@ public class SceneTransition : MonoBehaviour
     private Coroutine _loadingCoroutine;
     #endregion
 
-    
-
     public void InitFadeGroup()
     {
         if (_fadeGroup == null)

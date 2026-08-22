@@ -82,9 +82,4 @@ public class SceneCatalog : MonoBehaviour
     {
         return _nameToId.TryGetValue(name, out id);
     }
-
-    public IReadOnlyList<SceneInfo> GetScenes()
-    {
-        return Scenes;
-    }
 }

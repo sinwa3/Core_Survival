@@ -12,11 +12,13 @@ public class SceneflowManager : MonoBehaviour
     [SerializeField] private SceneTransition _transition;
     [SerializeField] private SceneCatalog _catalog;
 
-    [Header("페이드 시간")]
+    [Header("페이드 옵션")]
     [SerializeField] private float _fadeDuration = 0.5f;
 
     [Header("이미지")]
     [SerializeField] private Image _loadingBarImage;
+
+    [Header("페이드")]
     #endregion
 
     #region 내부 변수
@@ -24,6 +26,16 @@ public class SceneflowManager : MonoBehaviour
     private int _currentSceneIndex;
     private bool _isLoading;
     #endregion
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     private void Awake()
     {
@@ -249,11 +261,26 @@ public class SceneflowManager : MonoBehaviour
 
         _loadingBarImage.gameObject.SetActive(false);
         _transition.SetLoadingText("");
-        yield return _transition.Co_Fade(0.0f, _fadeDuration);
+        yield return _transition.Co_Fade(1.0f, _fadeDuration);
 
-
-        SetCurrentSceneIndex();
         _isLoading = false;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetCurrentSceneIndex();
+    }
+
+    public void LoadSceneInstant(ESceneID id)
+    {
+        if (!_catalog.TryGetSceneName(id, out string name))
+        {
+            Debug.LogWarning("없는 씬 ID / 확인 요망");
+
+            return;
+        }
+
+        SceneManager.LoadScene(name);
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Title : MonoBehaviour
+public class TitleButtonControl : MonoBehaviour
 {
     void Start()
     {
@@ -16,7 +16,12 @@ public class Title : MonoBehaviour
 
     public void OnClickStartGame()
     {
-        Debug.Log("게임 시작 버튼 눌림");
+        if (SceneflowManager.instance == null)
+        {
+            Debug.LogWarning("씬 플로우 매니저 인스턴스 null / 확인 요망");
+        }
+
+        SceneflowManager.instance.LoadNextScene();
     }
 
     public void OnClickOption()

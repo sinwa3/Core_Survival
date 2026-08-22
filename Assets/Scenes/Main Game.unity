@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6cdc76af4ca438f4481002b54089abbf, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -6242,10 +6242,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
-  _avoidSpeed: 5
   _rotateSharpness: 10
   _dashMultiple: 2.5
   _dashDuration: 0.14
+  _dashCooltime: 1
   _control: {fileID: 0}
   _animator: {fileID: 0}
   _gravity: -9.81

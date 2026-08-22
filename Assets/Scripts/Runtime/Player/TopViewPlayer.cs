@@ -27,7 +27,8 @@ public class TopViewPlayer : MonoBehaviour
     [SerializeField] private KeyCode _dashKey = KeyCode.Space;
 
     [Header("애니메이션")]
-    [SerializeField] private string _paramSpeed = "bSpeed";
+    [SerializeField] private string _paramRun = "bRun";
+    [SerializeField] private string _paramDash = "tDash";
     [SerializeField] private bool _hasDash = true;
 
     #endregion
@@ -37,6 +38,7 @@ public class TopViewPlayer : MonoBehaviour
     private float _dashUseTime = 0.0f;
     private float _verticalVelocity;
     private int _hashRun;
+    private int _hashDash;
     #endregion
 
     private void Reset()
@@ -57,7 +59,12 @@ public class TopViewPlayer : MonoBehaviour
             _animator = GetComponentInChildren<Animator>();
         }
 
-        _hashRun = Animator.StringToHash("bSpeed");
+        _hashRun = Animator.StringToHash(_paramRun);
+
+        if (_hasDash)
+        {
+            _hashDash = Animator.StringToHash(_paramDash);
+        }
     }
 
     void Start()
@@ -87,6 +94,12 @@ public class TopViewPlayer : MonoBehaviour
         if (Input.GetKeyDown(_dashKey) && inputDir.sqrMagnitude > 0.0001f && canDash)
         {
             _dashUseTime = Time.time;
+
+            if (_hasDash)
+            {
+                _animator.SetTrigger(_hashDash);
+            }
+
             StartCoroutine(Co_Dash(inputDir));
         }
 

@@ -224,8 +224,8 @@ public class SceneflowManager : MonoBehaviour
 
         _isLoading = true;
 
-        _loadingBarImage.gameObject.SetActive(true);
         _loadingBarImage.fillAmount = 0.0f;
+        _loadingBarImage.gameObject.SetActive(true);
 
         if (_transition == null)
         {
@@ -261,7 +261,7 @@ public class SceneflowManager : MonoBehaviour
 
         _loadingBarImage.gameObject.SetActive(false);
         _transition.SetLoadingText("");
-        yield return _transition.Co_Fade(1.0f, _fadeDuration);
+        yield return _transition.Co_Fade(0.0f, _fadeDuration);
 
         _isLoading = false;
     }

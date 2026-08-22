@@ -63,6 +63,14 @@ public class SceneflowManager : MonoBehaviour
     private void SetCurrentSceneIndex()
     {
         IReadOnlyList<SceneInfo> scenes = _catalog.Scenes;
+
+        if (scenes == null || scenes.Count == 0)
+        {
+            Debug.LogWarning("씬 비어있음 확인 요망");
+
+            return;
+        }
+
         string sceneName = SceneManager.GetActiveScene().name;
 
         for (int i = 0; i < scenes.Count; i++)
@@ -77,6 +85,78 @@ public class SceneflowManager : MonoBehaviour
 
         Debug.LogWarning("현재 씬 인덱스 찾지 못함");
         _currentSceneIndex = 0;
+    }
+
+    private void ReLoadScene()
+    {
+        string reLoadSceneName = SceneManager.GetActiveScene().name;
+
+        if (_catalog.TryGetSceneId(reLoadSceneName, out ESceneID id))
+        {
+            Debug.LogWarning("씬 ID 로드 불가 / 확인 요망");
+
+            return;
+        }
+
+        LoadScene(id);
+    }
+    private void LoadNextScene()
+    {
+        IReadOnlyList<SceneInfo> scenes = _catalog.Scenes;
+
+        if (scenes == null || scenes.Count == 0)
+        {
+            Debug.LogWarning("씬 비어있음 확인 요망");
+
+            return;
+        }
+
+        _currentSceneIndex++;
+
+        if (_currentSceneIndex >= scenes.Count)
+        {
+            _currentSceneIndex = 0;
+        }
+
+        string nextSceneName = scenes[_currentSceneIndex].sceneName;
+
+        if (!_catalog.TryGetSceneId(nextSceneName, out ESceneID id))
+        {
+            Debug.LogWarning("씬 ID 로드 불가 / 확인 요망");
+
+            return;
+        }
+
+        LoadScene(id);
+    }
+    private void LoadPrevScene()
+    {
+        IReadOnlyList<SceneInfo> scenes = _catalog.Scenes;
+
+        if (scenes == null || scenes.Count == 0)
+        {
+            Debug.LogWarning("씬 비어있음 확인 요망");
+
+            return;
+        }
+
+        _currentSceneIndex--;
+
+        if (_currentSceneIndex < 0)
+        {
+            _currentSceneIndex = scenes.Count;
+        }
+
+        string prevSceneName = scenes[_currentSceneIndex].sceneName;
+
+        if (!_catalog.TryGetSceneId(prevSceneName, out ESceneID id))
+        {
+            Debug.LogWarning("씬 ID 로드 불가 / 확인 요망");
+
+            return;
+        }
+
+        LoadScene(id);
     }
 
     public void LoadScene(ESceneID id)
@@ -96,5 +176,7 @@ public class SceneflowManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(name);
+        Debug.Log($"씬 {name} 로드 성공");
     }
+
 }

@@ -21,9 +21,6 @@ public class tempEnemy : MonoBehaviour
     [SerializeField] private float _moveSpeed = 10.0f;
     [SerializeField] private float _rotateSpeed = 5.0f;
 
-    [Header("충돌 태그")]
-    [SerializeField] private string _tag = "Skill";
-
     [Header("스텟")]
     [SerializeField] private EnemyStats _stats;
     #endregion
@@ -32,7 +29,16 @@ public class tempEnemy : MonoBehaviour
     {
         if (_playerTransform == null)
         {
-            _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+
+            if (p != null)
+            {
+                _playerTransform = p.transform;
+            }
+            else
+            {
+                Debug.LogWarning("Player 태그 오브젝트 찾을 수 없음");
+            }
         }
     }
 

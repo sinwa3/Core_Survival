@@ -2,6 +2,7 @@
 
 public class CleaveSkill : SkillsBase
 {
+    public override SkillID SkillID => SkillID.Cleave;
     public CleaveSkill(float skillCool, GameObject prefab) : base (skillCool, prefab)
     {
 

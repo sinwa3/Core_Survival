@@ -2,6 +2,11 @@
 
 public abstract class SkillsBase
 {
+    public abstract SkillID SkillID
+    { 
+        get;
+    }
+
     public float skillCooldown;
     protected float skillTimer = 0.0f;
     public GameObject skillPrefab;

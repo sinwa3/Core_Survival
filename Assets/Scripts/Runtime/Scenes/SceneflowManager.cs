@@ -62,11 +62,11 @@ public class SceneflowManager : MonoBehaviour
         if (_loadingBarImage == null)
         {
             Debug.LogWarning("로딩 바 이미지 null / 인스펙터 확인");
-
-            return;
         }
-
-        _loadingBarImage.gameObject.SetActive(false);
+        else
+        {
+            _loadingBarImage.gameObject.SetActive(false);
+        }
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
@@ -127,7 +127,7 @@ public class SceneflowManager : MonoBehaviour
     {
         string reLoadSceneName = SceneManager.GetActiveScene().name;
 
-        if (_catalog.TryGetSceneId(reLoadSceneName, out ESceneID id))
+        if (!_catalog.TryGetSceneId(reLoadSceneName, out ESceneID id))
         {
             Debug.LogWarning("씬 ID 로드 불가 / 확인 요망");
 
@@ -212,7 +212,6 @@ public class SceneflowManager : MonoBehaviour
         }
 
         StartCoroutine(Co_LoadScene(sceneName));
-        Debug.Log($"씬 {sceneName} 로드 성공");
     }
 
     private IEnumerator Co_LoadScene(string sceneName)
@@ -223,6 +222,8 @@ public class SceneflowManager : MonoBehaviour
         }
 
         _isLoading = true;
+
+        if(_loadingBarImage)
 
         _loadingBarImage.fillAmount = 0.0f;
         _loadingBarImage.gameObject.SetActive(true);
@@ -264,6 +265,7 @@ public class SceneflowManager : MonoBehaviour
         yield return _transition.Co_Fade(0.0f, _fadeDuration);
 
         _isLoading = false;
+        Debug.Log($"씬 {sceneName} 로드 성공");
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)

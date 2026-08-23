@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UseSkill : MonoBehaviour
+public class EnemyScanner : MonoBehaviour
 {
     #region 인스펙터
-    [Header("프리팹")]
-    [SerializeField] private GameObject _prefab;
-
     [Header("주변 적")]
     [SerializeField] private List<Transform> _enemyNearList = new List<Transform>();
 
@@ -15,38 +12,7 @@ public class UseSkill : MonoBehaviour
     [SerializeField] private string _enemyTag = "Enemy";
     #endregion
 
-    #region 내부 변수
-    private Transform _parent;
-    private Transform _nearestTr;
-    private float _attackTimer = 0.0f;
-    private float _attackCool = 1.5f;
-
-    #endregion
-
-    void Start()
-    {
-        SetParent();
-    }
-
-    void Update()
-    {
-        _attackTimer += Time.deltaTime;
-
-        if (_attackTimer < _attackCool)
-        {
-            return;
-        }
-
-        _nearestTr = GetNearest();
-
-        if (_nearestTr != null)
-        {
-            Use();
-            _attackTimer = 0.0f;
-        }
-    }
-
-    private Transform GetNearest()
+    public Transform GetNearest()
     {
         _enemyNearList.RemoveAll(enemy => enemy == null);
 
@@ -71,31 +37,6 @@ public class UseSkill : MonoBehaviour
         }
 
         return nearest;
-    }
-
-    private void Use()
-    {
-        GameObject go = Instantiate(_prefab, _parent);
-        go.transform.position = transform.position;
-
-        Quaternion skillRotation = Quaternion.LookRotation(_nearestTr.position - transform.position, Vector3.up);
-
-        go.transform.rotation = skillRotation;
-
-        Debug.Log("사용 성공");
-    }
-
-    private void SetParent()
-    {
-        if (_parent != null)
-        {
-            return;
-        }
-
-        GameObject parent = new GameObject("Bullet_Parent");
-        _parent = parent.transform;
-
-        Debug.Log("총알 부모 생성 성공");
     }
 
     private void OnTriggerEnter(Collider other)

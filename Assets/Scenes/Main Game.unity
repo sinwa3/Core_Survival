@@ -4001,6 +4001,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e9e82a5dabaaf545b3691cdafe21ba9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 129294318}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e9e82a5dabaaf545b3691cdafe21ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 129294319}
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e82a5dabaaf545b3691cdafe21ba9, type: 3}
 --- !u!1 &129294311 stripped
 GameObject:
@@ -4117,9 +4120,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1821dde5e2a316747bb0d1182c408747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 5002693984722300698, guid: f3b6bedbd453de243b572c5959940c2a, type: 3}
   _enemyNearList: []
   _enemyTag: Enemy
+--- !u!114 &129294319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129294311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba71e93df24cd4438b45e772f4b9d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skill: {fileID: 5002693984722300698, guid: f3b6bedbd453de243b572c5959940c2a, type: 3}
+  _scanner: {fileID: 129294318}
+  _skillCooldown: 1.5
 --- !u!4 &130544885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8628647818450248564, guid: 9cdd97adec7f5344f8569f94c74ec57b, type: 3}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TopViewPlayer : MonoBehaviour
+public class TopViewPlayerControl : MonoBehaviour
 {
     #region 인스펙터
     [Header("이동 / 회전 속도")]
@@ -141,7 +141,7 @@ public class TopViewPlayer : MonoBehaviour
             _control.Move(velocity * Time.deltaTime);
 
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
-            float sharpness = GetSharpness();
+            float sharpness = GetSharpness(_rotateSharpness);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, _dashMultiple * sharpness);
 
             // 다음 프레임 대기
@@ -161,14 +161,14 @@ public class TopViewPlayer : MonoBehaviour
 
         Quaternion rot = Quaternion.LookRotation(inputDir, Vector3.up);
 
-        float sharpness = GetSharpness();
+        float sharpness = GetSharpness(_rotateSharpness);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, sharpness);
     }
 
-    private float GetSharpness()
+    private float GetSharpness(float sharpness)
     {
-        return 1.0f - Mathf.Exp(-_rotateSharpness * Time.deltaTime);
+        return 1.0f - Mathf.Exp(-sharpness * Time.deltaTime);
     }
 
     private void TickGravity()

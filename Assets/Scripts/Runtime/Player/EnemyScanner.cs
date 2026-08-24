@@ -12,7 +12,7 @@ public class EnemyScanner : MonoBehaviour
     [SerializeField] private string _enemyTag = "Enemy";
 
     [Header("풀 참조")]
-    [SerializeField] private EnemyPooling _pool;
+    [SerializeField] private EnemyPooling _enemyPool;
     #endregion
 
     #region 내부 변수
@@ -33,24 +33,24 @@ public class EnemyScanner : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_pool != null)
+        if (_enemyPool != null)
         {
-            _pool.OnEnemyReturn += RemoveList;
+            _enemyPool.OnEnemyReturn += RemoveList;
         }
     }
 
     private void OnDisable()
     {
-        if (_pool != null)
+        if (_enemyPool != null)
         {
-            _pool.OnEnemyReturn -= RemoveList;
+            _enemyPool.OnEnemyReturn -= RemoveList;
         }
     }
 
     // 가까운 적 반환
     public Transform GetNearest()
     {
-        float range = _scanCollider.radius;
+        float range = _scanCollider.radius + 1.0f;
 
         _enemyNearList.RemoveAll(enemy => enemy == null || Vector3.Distance(enemy.position, transform.position) > range);
 
@@ -96,8 +96,6 @@ public class EnemyScanner : MonoBehaviour
 
         _enemyNearList.Remove(enemy.transform);
     }
-
-    
 
     private void OnTriggerEnter(Collider other)
     {

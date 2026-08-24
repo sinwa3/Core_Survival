@@ -5,10 +5,13 @@ public class SkillManager : MonoBehaviour
 {
     #region 인스펙터
     [Header("임시 스킬 프리팹")]
-    [SerializeField] private GameObject _skillPrefab;
+    [SerializeField] private SkillEffectBase _skillPrefab;
 
     [Header("적 스캔")]
     [SerializeField] private EnemyScanner _scanner;
+
+    [Header("스킬 풀")]
+    [SerializeField] private SkillEffectPooling _effectPool;
     #endregion
 
     #region 내부 변수
@@ -30,11 +33,19 @@ public class SkillManager : MonoBehaviour
             
             return;
         }
+
+        if (_effectPool == null)
+        {
+            Debug.LogWarning("이펙트 프리팹 null / 인스펙터 확인");
+            enabled = false;
+
+            return;
+        }
     }
 
     void Start()
     {
-        LearnSkill(new CleaveSkill(1.5f, _skillPrefab));
+        LearnSkill(new CleaveSkill(1.5f, _skillPrefab, _effectPool));
     }
 
     void Update()

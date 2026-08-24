@@ -9,12 +9,14 @@ public abstract class SkillsBase
 
     public float skillCooldown;
     protected float skillTimer = 0.0f;
-    public GameObject skillPrefab;
+    public SkillEffectBase skillPrefab;
+    protected SkillEffectPooling skillEffectPool;
 
-    public SkillsBase(float skillCool, GameObject prefab)
+    public SkillsBase(float skillCool, SkillEffectBase prefab, SkillEffectPooling effectPool)
     {
         skillCooldown = skillCool;
         skillPrefab = prefab;
+        skillEffectPool = effectPool;
     }
 
     public void TickCooltime(Transform player, Transform target)

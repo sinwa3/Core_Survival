@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class Cleave : MonoBehaviour
+public class Cleave : SkillEffectBase
 {
+    public override SkillID SkillID => SkillID.Cleave;
+
     #region 인스펙터
     [Header("스킬 옵션")]
     [SerializeField] private float _damage = 20.0f;
@@ -10,9 +12,10 @@ public class Cleave : MonoBehaviour
     [Header("충돌 태그")]
     [SerializeField] private string _enemyTag = "Enemy";
     #endregion
-    void Start()
+
+    public override void OnSpawn()
     {
-        Destroy(this.gameObject, _lifeTime);
+        StartCoroutine(Co_Life(_lifeTime));
     }
 
     private void OnTriggerEnter(Collider other)

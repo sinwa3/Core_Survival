@@ -3,7 +3,7 @@
 public class CleaveSkill : SkillsBase
 {
     public override SkillID SkillID => SkillID.Cleave;
-    public CleaveSkill(float skillCool, GameObject prefab) : base (skillCool, prefab)
+    public CleaveSkill(float skillCool, SkillEffectBase prefab, SkillEffectPooling pool) : base (skillCool, prefab, pool)
     {
 
     }
@@ -14,7 +14,7 @@ public class CleaveSkill : SkillsBase
         dir.y = 0.0f;
 
         Quaternion skillRot = Quaternion.LookRotation(dir, Vector3.up);
-        Object.Instantiate(skillPrefab, player.position, skillRot);
+        skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, skillRot);
 
         Debug.Log("가시 스킬 발동 성공");
     }

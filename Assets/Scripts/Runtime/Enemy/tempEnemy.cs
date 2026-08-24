@@ -88,6 +88,7 @@ public class TempEnemy : MonoBehaviour
         if (_ownerPool != null)
         {
             _ownerPool.ReturnEnemy(this);
+
             return;
         }
 

@@ -27,6 +27,7 @@ public class TempEnemy : MonoBehaviour
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
+    private Rigidbody _rb;
     #endregion
 
 
@@ -44,6 +45,15 @@ public class TempEnemy : MonoBehaviour
             {
                 Debug.LogWarning("Player 태그 오브젝트 찾을 수 없음");
             }
+        }
+
+        _rb = GetComponent<Rigidbody>();
+
+        if (_rb == null)
+        {
+            Debug.LogWarning("적 리지드바디 null 확인 요망");
+
+            return;
         }
     }
 
@@ -98,8 +108,10 @@ public class TempEnemy : MonoBehaviour
         {
             return;
         }
+        
+        Vector3 movePos = transform.position + toPlayer.normalized * _moveSpeed * Time.deltaTime;
 
-        transform.position += toPlayer.normalized * _moveSpeed * Time.deltaTime;
+        _rb.MovePosition(movePos);
     }
 
     // 플레이어쪽으로 돌기
@@ -111,8 +123,9 @@ public class TempEnemy : MonoBehaviour
         }
 
         Quaternion rot = Quaternion.LookRotation(toPlayer);
+        Quaternion moveRot = Quaternion.Slerp(transform.rotation, rot, 1.0f - Mathf.Exp(-_rotateSpeed * Time.deltaTime));
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1.0f - Mathf.Exp(-_rotateSpeed * Time.deltaTime));
+        _rb.MoveRotation(moveRot);
     }
 
     private void OnDrawGizmos()

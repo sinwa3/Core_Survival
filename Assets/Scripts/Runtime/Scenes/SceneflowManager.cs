@@ -85,12 +85,12 @@ public class SceneflowManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Q))
         {
             LoadPrevScene();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.E))
         {
             LoadNextScene();
         }

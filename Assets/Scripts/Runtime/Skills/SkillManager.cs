@@ -6,6 +6,7 @@ public class SkillManager : MonoBehaviour
     #region 인스펙터
     [Header("임시 스킬 프리팹")]
     [SerializeField] private SkillEffectBase _skillPrefab;
+    [SerializeField] private SkillEffectBase _auraPrefab;
 
     [Header("적 스캔")]
     [SerializeField] private EnemyScanner _scanner;
@@ -46,6 +47,7 @@ public class SkillManager : MonoBehaviour
     void Start()
     {
         LearnSkill(new CleaveSkill(1.5f, _skillPrefab, _effectPool));
+        LearnSkill(new DamageAuraSkill(7.0f, _auraPrefab, _effectPool));
     }
 
     void Update()

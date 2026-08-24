@@ -27,6 +27,7 @@ public class SkillEffectPooling : MonoBehaviour
 
         skill.OnDespawn();
         skill.gameObject.SetActive(false);
+        skill.transform.SetParent(transform);
         _skillPools[skill.SkillID].Enqueue(skill);
     }
 

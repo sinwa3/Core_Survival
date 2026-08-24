@@ -4162,6 +4162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillPrefab: {fileID: 8711677839299392850, guid: f3b6bedbd453de243b572c5959940c2a, type: 3}
+  _auraPrefab: {fileID: 6824115720190266673, guid: b8c3570181eff19418e7aad72578be96, type: 3}
   _scanner: {fileID: 502638303}
   _effectPool: {fileID: 604673695}
 --- !u!4 &130544885 stripped
@@ -13626,7 +13627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyNearList: []
   _enemyTag: Enemy
-  _enemypool: {fileID: 116784133}
+  _enemyPool: {fileID: 116784133}
 --- !u!1001 &507265898
 PrefabInstance:
   m_ObjectHideFlags: 0

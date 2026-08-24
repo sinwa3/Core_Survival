@@ -73,3 +73,11 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# 에셋 (저장소에서 제외)
+/[Aa]ssets/LowPolyFantasyArena2/
+/[Aa]ssets/LowPolyFantasyArena2.meta
+/[Aa]ssets/KayKit/
+/[Aa]ssets/KayKit.meta
+/[Aa]ssets/Polygon Arsenal/
+/[Aa]ssets/Polygon Arsenal.meta

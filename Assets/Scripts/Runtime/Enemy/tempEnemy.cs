@@ -11,7 +11,7 @@ public class EnemyStats
     public float attack;
 }
 
-public class tempEnemy : MonoBehaviour
+public class TempEnemy : MonoBehaviour
 {
     #region 인스펙터
     [Header("플레이어")]
@@ -42,11 +42,6 @@ public class tempEnemy : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        _stats.currentHP = _stats.maxHP;
-    }
-
     void Update()
     {
         Vector3 toPlayer = (_playerTransform.position - transform.position);
@@ -63,6 +58,11 @@ public class tempEnemy : MonoBehaviour
         {
             DestroyThis();
         }
+    }
+
+    public void ResetStats()
+    {
+        _stats.currentHP = _stats.maxHP;
     }
 
     private void FollowPlayer(Vector3 toPlayer)

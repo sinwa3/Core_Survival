@@ -19,7 +19,7 @@ public class Cleave : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
         {
-            tempEnemy enemy = other.GetComponent<tempEnemy>();
+            TempEnemy enemy = other.GetComponent<TempEnemy>();
 
             if (enemy != null)
             {

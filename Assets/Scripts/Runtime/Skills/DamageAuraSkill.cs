@@ -10,11 +10,7 @@ public class DamageAuraSkill : SkillsBase
 
     protected override void UseSkill(Transform player, Transform target)
     {
-        Vector3 dir = (target.transform.position - player.transform.position).normalized;
-        dir.y = 0.0f;
-
-        Quaternion skillRot = Quaternion.LookRotation(dir, Vector3.up);
-        SkillEffectBase skillEffect = skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, skillRot);
+        skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, player.rotation);
 
         Debug.Log("데미지 아우라 스킬 사용 성공");
     }

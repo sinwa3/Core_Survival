@@ -15,6 +15,22 @@ public class EnemyScanner : MonoBehaviour
     [SerializeField] private EnemyPooling _pool;
     #endregion
 
+    #region 내부 변수
+    private SphereCollider _scanCollider;
+    #endregion
+
+    private void Awake()
+    {
+        _scanCollider = GetComponent<SphereCollider>();
+
+        if (_scanCollider == null)
+        {
+            Debug.LogWarning("콜라이더 null / 확인 요망");
+
+            return;
+        }
+    }
+
     private void OnEnable()
     {
         if (_pool != null)
@@ -34,7 +50,9 @@ public class EnemyScanner : MonoBehaviour
     // 가까운 적 반환
     public Transform GetNearest()
     {
-        _enemyNearList.RemoveAll(enemy => enemy == null);
+        float range = _scanCollider.radius;
+
+        _enemyNearList.RemoveAll(enemy => enemy == null || Vector3.Distance(enemy.position, transform.position) > range);
 
         if (_enemyNearList.Count == 0)
         {
@@ -88,30 +106,12 @@ public class EnemyScanner : MonoBehaviour
             if (!_enemyNearList.Contains(other.transform))
             {
                 _enemyNearList.Add(other.transform);
-                Debug.Log($"주변 적에 {other.name} 추가");
+                Debug.Log($"주변 적에 {other.name} 추가 / 현재 주변 적 {_enemyNearList.Count}");
 
                 return;
             }
 
             Debug.LogWarning("이미 추가됨");
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
-        {
-            if (_enemyNearList.Contains(other.transform))
-            {
-                _enemyNearList.Remove(other.transform);
-                Debug.Log($"주변 적에 {other.name} 삭제 / 남은 개수 {_enemyNearList.Count}");
-
-                return;
-            }
-
-            Debug.LogWarning("리스트에 적 없음");
-        }
-
-
     }
 }

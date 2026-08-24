@@ -25,6 +25,7 @@ public class TestEnemyPool : MonoBehaviour
         if (_pool == null)
         {
             Debug.LogWarning("풀 연결 안됨 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }

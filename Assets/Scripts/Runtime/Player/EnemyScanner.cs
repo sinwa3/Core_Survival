@@ -104,12 +104,14 @@ public class EnemyScanner : MonoBehaviour
             if (_enemyNearList.Contains(other.transform))
             {
                 _enemyNearList.Remove(other.transform);
-                Debug.Log($"주변 적에 {other.name} 삭제");
+                Debug.Log($"주변 적에 {other.name} 삭제 / 남은 개수 {_enemyNearList.Count}");
 
                 return;
             }
 
             Debug.LogWarning("리스트에 적 없음");
         }
+
+
     }
 }

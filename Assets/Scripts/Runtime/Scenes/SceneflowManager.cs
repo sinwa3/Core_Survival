@@ -223,10 +223,11 @@ public class SceneflowManager : MonoBehaviour
 
         _isLoading = true;
 
-        if(_loadingBarImage)
-
-        _loadingBarImage.fillAmount = 0.0f;
-        _loadingBarImage.gameObject.SetActive(true);
+        if (_loadingBarImage != null)
+        {
+            _loadingBarImage.fillAmount = 0.0f;
+            _loadingBarImage.gameObject.SetActive(true);
+        }
 
         if (_transition == null)
         {

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Camera_Basic : MonoBehaviour
 {
@@ -10,24 +10,24 @@ public class Camera_Basic : MonoBehaviour
     }
 
 
-    #region ÀÎ½ºÆåÅÍ
-    [Header("½ÃÁ¡")]
+    #region ì¸ìŠ¤í™í„°
+    [Header("ì‹œì ")]
     [SerializeField] private POV _POV = POV.ThirdPerson;
 
-    [Header("ÂïÀ» Å¸°Ù")]
+    [Header("ì°ì„ íƒ€ê²Ÿ")]
     [SerializeField] private Transform _target;
 
-    [Header("Ä«¸Ş¶ó")]
+    [Header("ì¹´ë©”ë¼")]
     [SerializeField] private Camera _camera;
 
-    [Header("Ä«¸Ş¶ó °ü·Ã ¼³Á¤")]
+    [Header("ì¹´ë©”ë¼ ê´€ë ¨ ì„¤ì •")]
     [SerializeField] private Vector3 _cameraOffset = new Vector3(0.0f, 2.0f, -5.0f);
     [SerializeField] private Vector3 _firstOffset = new Vector3(0.0f, 1.0f, 0.5f);
     [SerializeField] private Vector3 _topOffset = new Vector3(0.0f, 10.0f, -2.0f);
     [SerializeField] private float _sensitive = 3.0f;
     [SerializeField] private float _cameraLookHeight = 1.2f;
 
-    [Header("»şÇÁ´Ï½º")]
+    [Header("ìƒ¤í”„ë‹ˆìŠ¤")]
     [Min(0.1f)]
     [SerializeField] private float _sharpness = 10.0f;
     #endregion
@@ -45,7 +45,7 @@ public class Camera_Basic : MonoBehaviour
 
         if (_target == null)
         {
-            Debug.Log("Å¸°Ù null / ÀÎ½ºÆåÅÍ È®ÀÎ");
+            Debug.Log("íƒ€ê²Ÿ null / ì¸ìŠ¤í™í„° í™•ì¸");
             enabled = false;
             return;
         }

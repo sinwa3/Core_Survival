@@ -10,8 +10,28 @@ public class EnemyScanner : MonoBehaviour
 
     [Header("감지 태그")]
     [SerializeField] private string _enemyTag = "Enemy";
+
+    [Header("풀 참조")]
+    [SerializeField] private EnemyPooling _pool;
     #endregion
 
+    private void OnEnable()
+    {
+        if (_pool != null)
+        {
+            _pool.OnEnemyReturn += RemoveList;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_pool != null)
+        {
+            _pool.OnEnemyReturn -= RemoveList;
+        }
+    }
+
+    // 가까운 적 반환
     public Transform GetNearest()
     {
         _enemyNearList.RemoveAll(enemy => enemy == null);
@@ -38,6 +58,28 @@ public class EnemyScanner : MonoBehaviour
 
         return nearest;
     }
+
+    // 리스트에서 지우기
+    public void RemoveList(TempEnemy enemy)
+    {
+        if (enemy == null)
+        {
+            Debug.LogWarning("리스트 지우기 불가 / 적 null");
+
+            return;
+        }
+
+        if (!_enemyNearList.Contains(enemy.transform))
+        {
+            Debug.LogWarning("리스트 지우기 불가 / 리스트에 없음");
+
+            return;
+        }
+
+        _enemyNearList.Remove(enemy.transform);
+    }
+
+    
 
     private void OnTriggerEnter(Collider other)
     {

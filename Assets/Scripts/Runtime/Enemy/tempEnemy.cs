@@ -25,6 +25,11 @@ public class TempEnemy : MonoBehaviour
     [SerializeField] private EnemyStats _stats;
     #endregion
 
+    #region 내부 변수
+    private EnemyPooling _ownerPool;
+    #endregion
+
+
     private void Awake()
     {
         if (_playerTransform == null)
@@ -50,6 +55,7 @@ public class TempEnemy : MonoBehaviour
         TickRotate(toPlayer);
     }
 
+    // 데미지 계산
     public void TakeDamage(float damage)
     {
         _stats.currentHP -= damage;
@@ -60,11 +66,32 @@ public class TempEnemy : MonoBehaviour
         }
     }
 
+    // 소환시 스탯 초기화
     public void ResetStats()
     {
         _stats.currentHP = _stats.maxHP;
     }
 
+    // 죽었을 때
+    public void DestroyThis()
+    {
+        if (_ownerPool != null)
+        {
+            _ownerPool.ReturnEnemy(this);
+            return;
+        }
+
+        // 풀 미연결 시 파괴
+        Destroy(gameObject);
+    }
+
+    // 풀 종류 설정
+    public void SetOwnerPool(EnemyPooling pool)
+    {
+        _ownerPool = pool;
+    }
+
+    // 플레이어 따라가기
     private void FollowPlayer(Vector3 toPlayer)
     {
         if (toPlayer.magnitude <= 2.0f)
@@ -75,6 +102,7 @@ public class TempEnemy : MonoBehaviour
         transform.position += toPlayer.normalized * _moveSpeed * Time.deltaTime;
     }
 
+    // 플레이어쪽으로 돌기
     private void TickRotate(Vector3 toPlayer)
     {
         if (toPlayer.sqrMagnitude < 0.0001f)
@@ -85,11 +113,6 @@ public class TempEnemy : MonoBehaviour
         Quaternion rot = Quaternion.LookRotation(toPlayer);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, 1.0f - Mathf.Exp(-_rotateSpeed * Time.deltaTime));
-    }
-
-    public void DestroyThis()
-    {
-        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()

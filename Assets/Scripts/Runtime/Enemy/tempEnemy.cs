@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 [Serializable]
@@ -11,7 +12,7 @@ public class EnemyStats
     public float attack;
 }
 
-public class TempEnemy : MonoBehaviour
+public class TempEnemy : MonoBehaviour, IDamageable
 {
     #region 인스펙터
     [Header("플레이어")]
@@ -23,11 +24,17 @@ public class TempEnemy : MonoBehaviour
 
     [Header("스텟")]
     [SerializeField] private EnemyStats _stats;
+
+    [Header("공격")]
+    [SerializeField] private float _attackRange = 2.0f;
+    [SerializeField] private float _attackInterval = 1.0f;
     #endregion
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
+    private float _attackTimer = 0.0f;
+    IDamageable _damageable;
     #endregion
 
     // 스폰 상태 판별
@@ -40,11 +47,12 @@ public class TempEnemy : MonoBehaviour
     {
         if (_playerTransform == null)
         {
-            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-            if (p != null)
+            if (player != null)
             {
-                _playerTransform = p.transform;
+                _playerTransform = player.transform;
+                _damageable = player.GetComponent<IDamageable>();
             }
             else
             {
@@ -68,6 +76,28 @@ public class TempEnemy : MonoBehaviour
 
         FollowPlayer(toPlayer);
         TickRotate(toPlayer);
+        TickAttack(toPlayer);
+    }
+
+    private void TickAttack(Vector3 toPlayer)
+    {
+        float sqrRange = _attackRange * _attackRange;
+
+        if (toPlayer.sqrMagnitude >= sqrRange)
+        {
+            return;
+        }
+
+        if (_attackTimer < _attackInterval)
+        {
+            _attackTimer += Time.deltaTime;
+
+            return;
+        }
+
+        _attackTimer = 0.0f;
+
+        _damageable.TakeDamage(_stats.attack);
     }
 
     // 데미지 계산
@@ -121,7 +151,7 @@ public class TempEnemy : MonoBehaviour
     // 플레이어 따라가기
     private void FollowPlayer(Vector3 toPlayer)
     {
-        if (toPlayer.magnitude <= 2.0f)
+        if (toPlayer.magnitude <= _attackRange)
         {
             return;
         }

@@ -87,7 +87,7 @@ public class LaserBeamEffect : SkillEffectBase
 
         if (_hasHit && hit.collider.CompareTag(_enemyTag))
         {
-            TempEnemy enemy = hit.collider.GetComponent<TempEnemy>();
+            IDamageable enemy = hit.collider.GetComponent<IDamageable>();
 
             if (enemy == null)
             {
@@ -97,7 +97,11 @@ public class LaserBeamEffect : SkillEffectBase
             }
 
             enemy.TakeDamage(_damage);
-            Debug.Log($"{SkillID} 스킬로 {hit.collider.name}에게 {_damage}의 데미지");
+
+            if (printLog)
+            {
+                Debug.Log($"{SkillID} 스킬로 {_damage}의 데미지");
+            }
         }
     }
 

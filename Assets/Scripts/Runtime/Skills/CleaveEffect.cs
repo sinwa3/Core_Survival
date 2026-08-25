@@ -22,12 +22,16 @@ public class CleaveEffect : SkillEffectBase
     {
         if (!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
         {
-            TempEnemy enemy = other.GetComponent<TempEnemy>();
+            IDamageable enemy = other.GetComponent<IDamageable>();
 
             if (enemy != null)
             {
                 enemy.TakeDamage(_damage);
-                Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
+
+                if (printLog)
+                {
+                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
+                }
             }
         }
     }

@@ -27,7 +27,7 @@ public class Cleave : SkillEffectBase
             if (enemy != null)
             {
                 enemy.TakeDamage(_damage);
-                Debug.Log($"{other.name}에게 {_damage}의 데미지");
+                Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
             }
         }
     }

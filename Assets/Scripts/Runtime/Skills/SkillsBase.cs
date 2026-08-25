@@ -3,14 +3,21 @@
 public abstract class SkillsBase
 {
     public abstract SkillID SkillID
-    { 
+    {
         get;
     }
 
+    // 스킬 자체 정보
     public float skillCooldown;
     protected float skillTimer = 0.0f;
+
+    // 스킬 프리팹
     public SkillEffectBase skillPrefab;
+    // 스킬 풀
     protected SkillEffectPooling skillEffectPool;
+
+    // 타겟 유무
+    public virtual bool NeedTarget => true;
 
     public SkillsBase(float skillCool, SkillEffectBase prefab, SkillEffectPooling effectPool)
     {
@@ -19,6 +26,7 @@ public abstract class SkillsBase
         skillEffectPool = effectPool;
     }
 
+    // 업데이트에서 스킬 쿨타임을 돌리고 사용
     public void TickCooltime(Transform player, Transform target)
     {
         if (skillTimer < skillCooldown)
@@ -28,7 +36,7 @@ public abstract class SkillsBase
             return;
         }
 
-        if (target == null)
+        if (NeedTarget && target == null)
         {
             return;
         }
@@ -37,5 +45,6 @@ public abstract class SkillsBase
         skillTimer = 0.0f;
     }
 
+    // 실제 사용 로직
     protected abstract void UseSkill(Transform player, Transform target);
 }

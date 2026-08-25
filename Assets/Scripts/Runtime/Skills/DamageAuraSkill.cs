@@ -3,6 +3,9 @@
 public class DamageAuraSkill : SkillsBase
 {
     public override SkillID SkillID => SkillID.DamageAura;
+
+    public override bool NeedTarget => false;
+
     public DamageAuraSkill(float skillCool, SkillEffectBase prefab, SkillEffectPooling pool) : base (skillCool, prefab, pool)
     {
 

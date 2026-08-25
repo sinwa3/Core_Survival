@@ -3,6 +3,7 @@
 public class CleaveSkill : SkillsBase
 {
     public override SkillID SkillID => SkillID.Cleave;
+
     public CleaveSkill(float skillCool, SkillEffectBase prefab, SkillEffectPooling pool) : base (skillCool, prefab, pool)
     {
 

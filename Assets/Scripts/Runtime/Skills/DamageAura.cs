@@ -39,10 +39,12 @@ public class DamageAura : SkillEffectBase
         }
     }
 
+    
     public override void OnSpawn()
     {
         StartCoroutine(Co_Life(_lifeTime));
 
+        // 플레이어 따라가기
         transform.SetParent(_playerTransform);
     }
 
@@ -60,6 +62,7 @@ public class DamageAura : SkillEffectBase
         }
     }
 
+    // 지속 데미지
     private void OnTriggerStay(Collider other)
     {
         if (_timer < _damageInterval)

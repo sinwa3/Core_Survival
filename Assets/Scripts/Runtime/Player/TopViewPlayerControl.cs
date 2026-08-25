@@ -17,6 +17,7 @@ public class TopViewPlayerControl : MonoBehaviour
     [Header("참조")]
     [SerializeField] private CharacterController _control;
     [SerializeField] private Animator _animator;
+    [SerializeField] private EnemyScanner _scanner;
 
     [Header("중력")]
     [SerializeField] private float _gravity = -9.81f;
@@ -29,6 +30,7 @@ public class TopViewPlayerControl : MonoBehaviour
     [SerializeField] private string _paramRun = "bRun";
     [SerializeField] private string _paramDash = "tDash";
     [SerializeField] private bool _hasDash = true;
+    
 
     #endregion
 
@@ -63,6 +65,11 @@ public class TopViewPlayerControl : MonoBehaviour
         if (_hasDash)
         {
             _hashDash = Animator.StringToHash(_paramDash);
+        }
+
+        if (_scanner == null)
+        {
+            _scanner = GetComponentInChildren<EnemyScanner>();
         }
     }
 
@@ -153,6 +160,13 @@ public class TopViewPlayerControl : MonoBehaviour
 
     private void TickRotate(Vector3 inputDir)
     {
+        Transform enemyTr = _scanner.GetNearest();
+
+        if (enemyTr != null)
+        {
+            inputDir = enemyTr.position - transform.position;
+        }
+
         if (inputDir.sqrMagnitude < 0.0001f)
         {
             return;

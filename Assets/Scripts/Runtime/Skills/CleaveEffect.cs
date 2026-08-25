@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Cleave : SkillEffectBase
+public class CleaveEffect : SkillEffectBase
 {
     public override SkillID SkillID => SkillID.Cleave;
 

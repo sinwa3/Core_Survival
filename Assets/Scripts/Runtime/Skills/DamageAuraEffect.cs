@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class DamageAura : SkillEffectBase
+public class DamageAuraEffect : SkillEffectBase
 {
     public override SkillID SkillID => SkillID.DamageAura;
 

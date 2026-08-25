@@ -7,6 +7,7 @@ public class SkillManager : MonoBehaviour
     [Header("임시 스킬 프리팹")]
     [SerializeField] private SkillEffectBase _skillPrefab;
     [SerializeField] private SkillEffectBase _auraPrefab;
+    [SerializeField] private SkillEffectBase _laserPrefab;
 
     [Header("적 스캔")]
     [SerializeField] private EnemyScanner _scanner;
@@ -48,6 +49,7 @@ public class SkillManager : MonoBehaviour
     {
         LearnSkill(new CleaveSkill(1.5f, _skillPrefab, _effectPool));
         LearnSkill(new DamageAuraSkill(7.0f, _auraPrefab, _effectPool));
+        LearnSkill(new LaserBeamSkill(5.0f, _laserPrefab, _effectPool));
     }
 
     void Update()

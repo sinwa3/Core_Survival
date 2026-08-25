@@ -27,6 +27,9 @@ MonoBehaviour:
     - 2158087cfcf1d2a4db9e64248a4cd064
     - e40e7ee862912444c820a8cfd085a714
     - 5ff39bc67c649f845b764a4877582c5d
+    - 0f839f1be2ee23e4ba461d30b186a55e
+    - c41a2f1ac7c2d2246a1b0ec7daf23744
+    - 646aa75d8e6e78544ab3851e4064a90c
     values:
     - colorIndex: 1
       iconNameOrGuid: 
@@ -54,3 +57,9 @@ MonoBehaviour:
       iconNameOrGuid: TerrainData Icon
     - colorIndex: 0
       iconNameOrGuid: Prefab Icon
+    - colorIndex: 1
+      iconNameOrGuid: 
+    - colorIndex: 1
+      iconNameOrGuid: 
+    - colorIndex: 1
+      iconNameOrGuid: 

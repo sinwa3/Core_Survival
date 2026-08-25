@@ -4163,6 +4163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillPrefab: {fileID: 8711677839299392850, guid: f3b6bedbd453de243b572c5959940c2a, type: 3}
   _auraPrefab: {fileID: 6824115720190266673, guid: b8c3570181eff19418e7aad72578be96, type: 3}
+  _laserPrefab: {fileID: -1769670667779776747, guid: 949755faf8121e347b117029c2b30d85, type: 3}
   _scanner: {fileID: 502638303}
   _effectPool: {fileID: 604673695}
 --- !u!4 &130544885 stripped

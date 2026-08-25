@@ -4,6 +4,8 @@ public class LaserBeamSkill : SkillsBase
 {
     public override SkillID SkillID => SkillID.LaserBeam;
 
+    public override bool NeedTarget => false;
+
     public LaserBeamSkill(float skillCool, SkillEffectBase prefab, SkillEffectPooling pool) : base(skillCool, prefab, pool)
     {
 
@@ -11,12 +13,13 @@ public class LaserBeamSkill : SkillsBase
 
     protected override void UseSkill(Transform player, Transform target)
     {
-        Vector3 dir = (target.transform.position - player.transform.position).normalized;
+        Vector2 randPos = Random.insideUnitCircle.normalized;
 
-        dir.y = 0.0f;
+        Vector3 dir = new Vector3(randPos.x, 0.0f, randPos.y);
 
-        Quaternion skillRot = Quaternion.LookRotation(dir, Vector3.up);
-        skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, skillRot);
+        Quaternion randRot = Quaternion.LookRotation(dir);
+
+        skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, randRot);
 
         Debug.Log("레이저 스킬 발동 성공");
     }

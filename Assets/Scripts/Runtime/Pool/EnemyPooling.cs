@@ -13,6 +13,7 @@ public class EnemyPooling : MonoBehaviour
 
     #region 내부 변수
     private Queue<TempEnemy> _enemyPool = new Queue<TempEnemy>();
+    private List<TempEnemy> _activeEnemy = new List<TempEnemy>();
     #endregion
 
     public event Action<TempEnemy> OnEnemyReturn;
@@ -34,25 +35,41 @@ public class EnemyPooling : MonoBehaviour
 
         for (int i = 0; i < _prewarmCount; i++)
         {
-            TempEnemy enemy = Instantiate(_enemyPrefab, transform);
-            enemy.gameObject.SetActive(false);
-
-            _enemyPool.Enqueue(enemy);
+            _enemyPool.Enqueue(CreateEnemy());
         }
 
         Debug.Log("적 프리웜 성공 / 큐 생성 완료");
     }
 
+    private TempEnemy CreateEnemy()
+    {
+        TempEnemy enemy = Instantiate(_enemyPrefab, transform);
+
+        enemy.SetOwnerPool(this);
+        enemy.gameObject.SetActive(false);
+
+        return enemy;
+    }
+
     // 적 꺼내기
     public TempEnemy GetEnemy(Vector3 pos, Quaternion rot)
     {
-        TempEnemy enemy = null;
+        if (_enemyPrefab == null)
+        {
+            Debug.LogWarning("적 생성 불가 / 프리팹 없음");
 
-        enemy = (_enemyPool.Count > 0) ? _enemyPool.Dequeue() : Instantiate(_enemyPrefab, transform);
+            return null;
+        }
+
+        TempEnemy enemy;
+
+        enemy = (_enemyPool.Count > 0) ? _enemyPool.Dequeue() : CreateEnemy();
+
         enemy.transform.SetPositionAndRotation(pos, rot);
-        enemy.SetOwnerPool(this);
         enemy.gameObject.SetActive(true);
+        _activeEnemy.Add(enemy);
         enemy.OnSpawn();
+
 
         return enemy;
     }
@@ -67,7 +84,7 @@ public class EnemyPooling : MonoBehaviour
             return;
         }
 
-        if (_enemyPool.Contains(enemy))
+        if (!enemy.IsActive)
         {
             Debug.LogWarning("적 반환 불가 / 중복 반환");
 
@@ -78,6 +95,8 @@ public class EnemyPooling : MonoBehaviour
         enemy.gameObject.SetActive(false);
         _enemyPool.Enqueue(enemy);
         OnEnemyReturn?.Invoke(enemy);
+
+        _activeEnemy.Remove(enemy);
 
         Debug.Log("적 반환 성공");
     }

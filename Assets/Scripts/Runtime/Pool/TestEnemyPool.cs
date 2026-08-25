@@ -19,6 +19,7 @@ public class TestEnemyPool : MonoBehaviour
     [SerializeField] private float _maxRange = 20.0f;
     #endregion
 
+
     private void Awake()
     {
         if (_pool == null)

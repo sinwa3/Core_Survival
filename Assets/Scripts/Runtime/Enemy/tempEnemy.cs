@@ -30,6 +30,11 @@ public class TempEnemy : MonoBehaviour
     private Rigidbody _rb;
     #endregion
 
+    // 스폰 상태 판별
+    public bool IsActive
+    {
+        get; private set;
+    }
 
     private void Awake()
     {
@@ -68,6 +73,11 @@ public class TempEnemy : MonoBehaviour
     // 데미지 계산
     public void TakeDamage(float damage)
     {
+        if (!IsActive)
+        {
+            return;
+        }
+
         _stats.currentHP -= damage;
 
         if (_stats.currentHP <= 0)
@@ -78,12 +88,13 @@ public class TempEnemy : MonoBehaviour
 
     public void OnSpawn()
     {
+        IsActive = true;
         _stats.currentHP = _stats.maxHP;
     }
 
     public void OnDespawn()
     {
-
+        IsActive = false;
     }
 
     // 죽었을 때
@@ -97,6 +108,7 @@ public class TempEnemy : MonoBehaviour
         }
 
         // 풀 미연결 시 파괴
+        IsActive = false;
         Destroy(gameObject);
     }
 

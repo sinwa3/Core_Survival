@@ -50,9 +50,9 @@ public class EnemyPooling : MonoBehaviour
 
         enemy = (_enemyPool.Count > 0) ? _enemyPool.Dequeue() : Instantiate(_enemyPrefab, transform);
         enemy.transform.SetPositionAndRotation(pos, rot);
-        enemy.ResetStats();
         enemy.SetOwnerPool(this);
         enemy.gameObject.SetActive(true);
+        enemy.OnSpawn();
 
         return enemy;
     }
@@ -74,6 +74,7 @@ public class EnemyPooling : MonoBehaviour
             return;
         }
 
+        enemy.OnDespawn();
         enemy.gameObject.SetActive(false);
         _enemyPool.Enqueue(enemy);
         OnEnemyReturn?.Invoke(enemy);

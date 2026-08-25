@@ -7,7 +7,6 @@ public class TestEnemyPool : MonoBehaviour
     #region 인스펙터
     [Header("키 설정")]
     [SerializeField] private KeyCode _spawnKey = KeyCode.Q;
-    [SerializeField] private KeyCode _despawnKey = KeyCode.E;
 
     [Header("풀 연결")]
     [SerializeField] private EnemyPooling _pool;

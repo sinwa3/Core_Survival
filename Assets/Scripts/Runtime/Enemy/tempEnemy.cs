@@ -76,10 +76,14 @@ public class TempEnemy : MonoBehaviour
         }
     }
 
-    // 소환시 스탯 초기화
-    public void ResetStats()
+    public void OnSpawn()
     {
         _stats.currentHP = _stats.maxHP;
+    }
+
+    public void OnDespawn()
+    {
+
     }
 
     // 죽었을 때

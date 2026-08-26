@@ -123,7 +123,7 @@ public class SceneflowManager : MonoBehaviour
         _currentSceneIndex = 0;
     }
 
-    private void ReLoadScene()
+    public void ReLoadScene()
     {
         string reLoadSceneName = SceneManager.GetActiveScene().name;
 
@@ -271,6 +271,7 @@ public class SceneflowManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Time.timeScale = 1.0f;
         SetCurrentSceneIndex();
     }
 

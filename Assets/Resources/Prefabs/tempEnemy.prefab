@@ -126,6 +126,9 @@ MonoBehaviour:
     maxHP: 100
     currentHP: 0
     attack: 10
+    exp: 50
+  _attackRange: 2
+  _attackInterval: 1
 --- !u!54 &374549583761865358
 Rigidbody:
   m_ObjectHideFlags: 0

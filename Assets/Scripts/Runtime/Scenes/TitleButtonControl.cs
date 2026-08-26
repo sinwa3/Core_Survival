@@ -4,21 +4,13 @@ using UnityEngine;
 
 public class TitleButtonControl : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void OnClickStartGame()
     {
         if (SceneflowManager.instance == null)
         {
             Debug.LogWarning("씬 플로우 매니저 인스턴스 null / 확인 요망");
+
+            return;
         }
 
         SceneflowManager.instance.LoadNextScene();

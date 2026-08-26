@@ -10,12 +10,13 @@ public class PlayerLevel : MonoBehaviour
     [Tooltip("증가 경험치 배수")][SerializeField] private float _expMultiplier = 1.05f;
     #endregion
 
-
     #region 내수 변수
     private int _level;
     private float _currentExp;
     private float _requiredExp;
     #endregion
+
+    public int Level => _level;
 
     // 임시 GUI용 스타일
     private GUIStyle _style;
@@ -28,11 +29,6 @@ public class PlayerLevel : MonoBehaviour
     private void OnDisable()
     {
         TempEnemy.OnEnemyDead -= AddExp;
-    }
-
-    private void Awake()
-    {
-        
     }
 
     void Start()
@@ -52,7 +48,7 @@ public class PlayerLevel : MonoBehaviour
     {
         _currentExp += enemy.Stats.exp;
 
-        while (_currentExp >= _requiredExp)
+        while (_requiredExp > 0.0f && _currentExp >= _requiredExp)
         {
             _currentExp -= _requiredExp;
             _level++;
@@ -62,7 +58,7 @@ public class PlayerLevel : MonoBehaviour
 
     private float GetRequiredExp()
     {
-        return _baseExp * Mathf.Pow(_level, _expMultiplier);
+        return _baseExp * Mathf.Pow(_expMultiplier, _level - 1);
     }
 
     private void OnGUI()

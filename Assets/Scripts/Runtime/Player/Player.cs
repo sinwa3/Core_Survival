@@ -19,10 +19,14 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private PlayerStats _playerStats;
     #endregion
 
+    public event Action OnPlayerDead;
+
     public bool IsAlive
     {
         get; private set;
     } = true;
+
+    public PlayerStats PlayerStats => _playerStats;
 
     private void Awake()
     {
@@ -41,9 +45,7 @@ public class Player : MonoBehaviour, IDamageable
         if (_playerStats.currentHP <= 0)
         {
             IsAlive = false;
-            // 죽음 함수
-            // 예비용 게임 멈추기
-            Time.timeScale = 0.0f;
+            OnPlayerDead?.Invoke();
         }
 
         Debug.Log($"플레이어 체력 {_playerStats.currentHP} / {_playerStats.maxHP}");

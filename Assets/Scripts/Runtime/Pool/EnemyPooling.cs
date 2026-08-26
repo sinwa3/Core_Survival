@@ -8,11 +8,13 @@ public class EnemyPooling : MonoBehaviour
     #region 인스펙터
     [Header("풀링 옵션")]
     [SerializeField] private TempEnemy _enemyPrefab;
-    [SerializeField] private int _prewarmCount = 20;
+    [SerializeField] private int _prewarmCount = 100;
     #endregion
 
     #region 내부 변수
     private Queue<TempEnemy> _enemyPool = new Queue<TempEnemy>();
+
+    // 활성 적 추적
     private List<TempEnemy> _activeEnemy = new List<TempEnemy>();
     #endregion
 
@@ -67,9 +69,10 @@ public class EnemyPooling : MonoBehaviour
 
         enemy.transform.SetPositionAndRotation(pos, rot);
         enemy.gameObject.SetActive(true);
-        _activeEnemy.Add(enemy);
-        enemy.OnSpawn();
 
+        _activeEnemy.Add(enemy);
+
+        enemy.OnSpawn();
 
         return enemy;
     }

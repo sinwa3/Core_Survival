@@ -10,6 +10,7 @@ public class EnemyStats
     public float maxHP;
     public float currentHP;
     public float attack;
+    public float exp;
 }
 
 public class TempEnemy : MonoBehaviour, IDamageable
@@ -36,6 +37,10 @@ public class TempEnemy : MonoBehaviour, IDamageable
     private float _attackTimer = 0.0f;
     IDamageable _damageable;
     #endregion
+
+    public static event Action<TempEnemy> OnEnemyDead;
+
+    public EnemyStats Stats => _stats;
 
     // 스폰 상태 판별
     public bool IsActive
@@ -79,6 +84,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
         TickAttack(toPlayer);
     }
 
+    // 공격
     private void TickAttack(Vector3 toPlayer)
     {
         float sqrRange = _attackRange * _attackRange;
@@ -100,7 +106,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _damageable.TakeDamage(_stats.attack);
     }
 
-    // 데미지 계산
+    // 받는 데미지 계산
     public void TakeDamage(float damage)
     {
         if (!IsActive)
@@ -112,6 +118,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
         if (_stats.currentHP <= 0)
         {
+            OnEnemyDead?.Invoke(this);
             DestroyThis();
         }
     }

@@ -21,12 +21,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private KeyCode _pauseKey = KeyCode.Escape;
 
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerLevel _playerLevel;
     #endregion
 
     #region 내부 변수
     private int _killCount;
     private float _playTime;
-
     #endregion
 
     public int KillCount => _killCount;
@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
         {
             _player.OnPlayerDead += PlayerDead;
         }
+
+        if (_playerLevel != null)
+        {
+            _playerLevel.OnLevelUp += PlayerLevelUp;
+        }
     }
 
     private void OnDisable()
@@ -50,6 +55,11 @@ public class GameManager : MonoBehaviour
         {
             _player.OnPlayerDead -= PlayerDead;
         }
+
+        if (_playerLevel != null)
+        {
+            _playerLevel.OnLevelUp -= PlayerLevelUp;
+        }
     }
 
     private void Awake()
@@ -57,6 +67,13 @@ public class GameManager : MonoBehaviour
         if (_player == null)
         {
             Debug.LogWarning("플레이어 컴포넌트 null / 인스펙터 확인");
+
+            return;
+        }
+
+        if (_playerLevel == null)
+        {
+            Debug.LogWarning("플레이어 레벨 컴포넌트 null / 인스펙터 확인");
 
             return;
         }
@@ -89,6 +106,11 @@ public class GameManager : MonoBehaviour
     private void PlayerDead()
     {
         ChangeGameState(EGameState.GameOver);
+    }
+
+    private void PlayerLevelUp()
+    {
+        ChangeGameState(EGameState.LevelUp);
     }
 
     public void ChangeGameState(EGameState gameState)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class PlayerLevel : MonoBehaviour
     #region 인스펙터
     [Header("레벨")]
     [Tooltip("기준 경험치")][SerializeField] private float _baseExp = 100.0f;
-    [Tooltip("증가 경험치 배수")][SerializeField] private float _expMultiplier = 1.05f;
+    [Tooltip("증가 경험치 배수")][SerializeField] private float _expMultiplier = 1.1f;
     #endregion
 
     #region 내수 변수
@@ -17,6 +18,7 @@ public class PlayerLevel : MonoBehaviour
     #endregion
 
     public int Level => _level;
+    public event Action OnLevelUp;
 
     // 임시 GUI용 스타일
     private GUIStyle _style;
@@ -53,6 +55,7 @@ public class PlayerLevel : MonoBehaviour
             _currentExp -= _requiredExp;
             _level++;
             _requiredExp = GetRequiredExp();
+            OnLevelUp?.Invoke();
         }
     }
 

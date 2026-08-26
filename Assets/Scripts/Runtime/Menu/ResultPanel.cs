@@ -34,8 +34,8 @@ public class ResultPanel : MenuPanelBase
         base.Show();
 
         float time = _gameManager.PlayTime;
-        float minute = Mathf.FloorToInt(time / 60);
-        float second = Mathf.FloorToInt(time % 60);
+        int minute = Mathf.FloorToInt(time / 60);
+        int second = Mathf.FloorToInt(time % 60);
 
         _playTime.text = $"{minute}분 {second}초";
         _lastLevel.text = _playerLevel.Level.ToString();

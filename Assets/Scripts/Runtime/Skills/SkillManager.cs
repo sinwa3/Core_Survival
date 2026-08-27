@@ -5,7 +5,7 @@ public class SkillManager : MonoBehaviour
 {
     #region 인스펙터
     [Header("임시 스킬 프리팹")]
-    [SerializeField] private SkillEffectBase _skillPrefab;
+    [SerializeField] private SkillEffectBase _cleavePrefab;
     [SerializeField] private SkillEffectBase _auraPrefab;
     [SerializeField] private SkillEffectBase _laserPrefab;
 
@@ -28,17 +28,17 @@ public class SkillManager : MonoBehaviour
             _scanner = GetComponent<EnemyScanner>();
         }
 
-        if (_skillPrefab == null)
-        {
-            Debug.LogWarning("스킬 프리팹 null / 인스펙터 확인");
-            enabled = false;
-            
-            return;
-        }
-
         if (_effectPool == null)
         {
             Debug.LogWarning("이펙트 프리팹 null / 인스펙터 확인");
+            enabled = false;
+
+            return;
+        }
+
+        if (_cleavePrefab == null || _auraPrefab == null || _laserPrefab == null)
+        {
+            Debug.LogWarning("스킬 프리팹 null / 인스펙터 확인");
             enabled = false;
 
             return;
@@ -47,9 +47,7 @@ public class SkillManager : MonoBehaviour
 
     void Start()
     {
-        LearnSkill(new CleaveSkill(1.5f, _skillPrefab, _effectPool));
-        LearnSkill(new DamageAuraSkill(7.0f, _auraPrefab, _effectPool));
-        LearnSkill(new LaserBeamSkill(5.0f, _laserPrefab, _effectPool));
+        LearnSkill(SkillID.Cleave);
     }
 
     void Update()
@@ -81,6 +79,34 @@ public class SkillManager : MonoBehaviour
         _skillDict.Add(skill.SkillID, skill);
 
         return true;
+    }
+
+    public bool LearnSkill(SkillID skillID)
+    {
+        SkillsBase skill = CreateSkill(skillID);
+
+        return LearnSkill(skill);
+    }
+
+    private SkillsBase CreateSkill(SkillID skillID)
+    {
+        switch (skillID)
+        {
+            case SkillID.Cleave:
+                return new CleaveSkill(1.5f, _cleavePrefab, _effectPool);
+            case SkillID.DamageAura:
+                return new DamageAuraSkill(7.0f, _auraPrefab, _effectPool);
+            case SkillID.LaserBeam:
+                return new LaserBeamSkill(5.5f, _laserPrefab, _effectPool);
+            default:
+                Debug.LogWarning($"스킬 타입 미설정 / 확인 요망");
+                return null;
+        }
+    }
+
+    public bool HasSkill(SkillID skillID)
+    {
+        return _skillDict.ContainsKey(skillID);
     }
 
 

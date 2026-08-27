@@ -15,10 +15,13 @@ public class PlayerLevel : MonoBehaviour
     private int _level;
     private float _currentExp;
     private float _requiredExp;
+    private int _levelBuffer = 0;
     #endregion
 
     public int Level => _level;
+    public int LevelBuffer => _levelBuffer;
     public event Action OnLevelUp;
+
 
     // 임시 GUI용 스타일
     private GUIStyle _style;
@@ -54,9 +57,29 @@ public class PlayerLevel : MonoBehaviour
         {
             _currentExp -= _requiredExp;
             _level++;
+            _levelBuffer++;
             _requiredExp = GetRequiredExp();
+        }
+
+        if (_levelBuffer > 0)
+        {
             OnLevelUp?.Invoke();
         }
+    }
+
+    public void UseLevelBuffer()
+    {
+        if (_levelBuffer <= 0)
+        {
+            return;
+        }
+
+        _levelBuffer--;
+    }
+
+    public void ResetLevelBuffer()
+    {
+        _levelBuffer = 0;
     }
 
     private float GetRequiredExp()

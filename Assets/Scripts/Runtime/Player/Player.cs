@@ -50,4 +50,15 @@ public class Player : MonoBehaviour, IDamageable
 
         Debug.Log($"플레이어 체력 {_playerStats.currentHP} / {_playerStats.maxHP}");
     }
+
+    public void IncreaseHP(float amount)
+    {
+        _playerStats.maxHP += amount;
+        _playerStats.currentHP += amount;
+    }
+
+    public void IncreaseSpeed(float amount)
+    {
+        _playerStats.speed += amount;
+    }
 }

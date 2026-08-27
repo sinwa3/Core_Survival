@@ -6,7 +6,7 @@ public class TopViewPlayerControl : MonoBehaviour
 {
     #region 인스펙터
     [Header("이동 / 회전 속도")]
-    [SerializeField] private float _moveSpeed = 10.0f;
+    [SerializeField] private float _moveSpeed = 5.0f;
     [SerializeField] private float _rotateSharpness = 10.0f;
 
     [Header("대시 옵션")]
@@ -30,6 +30,9 @@ public class TopViewPlayerControl : MonoBehaviour
     [SerializeField] private string _paramRun = "bRun";
     [SerializeField] private string _paramDash = "tDash";
     [SerializeField] private bool _hasDash = true;
+
+    [Header("스텟")]
+    [SerializeField] private Player _player;
     
 
     #endregion
@@ -71,6 +74,11 @@ public class TopViewPlayerControl : MonoBehaviour
         {
             _scanner = GetComponentInChildren<EnemyScanner>();
         }
+
+        if (_player == null)
+        {
+            _player = GetComponent<Player>();
+        }
     }
 
     void Start()
@@ -109,7 +117,7 @@ public class TopViewPlayerControl : MonoBehaviour
             StartCoroutine(Co_Dash(inputDir));
         }
 
-        Vector3 velocity = inputDir * _moveSpeed;
+        Vector3 velocity = inputDir * _moveSpeed * _player.PlayerStats.speed;
         velocity.y = _verticalVelocity;
 
         _control.Move(velocity * Time.deltaTime);
@@ -139,7 +147,7 @@ public class TopViewPlayerControl : MonoBehaviour
             timer += Time.deltaTime;
 
             // 대시 이동속도 계산
-            Vector3 velocity = dir * _moveSpeed * _dashMultiple;
+            Vector3 velocity = dir * _moveSpeed * _player.PlayerStats.speed * _dashMultiple;
 
             // 대시 중에도 떨어지게
             velocity.y = _verticalVelocity;

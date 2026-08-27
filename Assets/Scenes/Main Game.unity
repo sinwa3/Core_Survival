@@ -3557,7 +3557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2089617343695891939, guid: c7f05e300e392e34fa5b2821a641e658, type: 3}
-  _prewarmCount: 20
+  _prewarmCount: 100
 --- !u!4 &116784134
 Transform:
   m_ObjectHideFlags: 0

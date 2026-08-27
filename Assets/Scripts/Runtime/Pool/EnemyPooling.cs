@@ -18,6 +18,7 @@ public class EnemyPooling : MonoBehaviour
     private List<TempEnemy> _activeEnemy = new List<TempEnemy>();
     #endregion
 
+    public IReadOnlyList<TempEnemy> ActiveEnemy => _activeEnemy;
     public event Action<TempEnemy> OnEnemyReturn;
 
     private void Awake()

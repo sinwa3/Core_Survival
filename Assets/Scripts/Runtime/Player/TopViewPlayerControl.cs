@@ -212,22 +212,4 @@ public class TopViewPlayerControl : MonoBehaviour
 
     }
 
-    private void OnGUI()
-    {
-        float cool = _dashUseTime + _dashCooltime - Time.time;
-
-        if (cool < 0.0f)
-        {
-            cool = 0.0f;
-        }
-
-        GUIStyle label = new GUIStyle();
-
-        label.fontSize = 40;
-        label.normal.textColor = Color.white;
-
-        GUI.Box(new Rect(10, 10, 400, 150), "");
-        GUI.Label(new Rect(60, 50, 600, 300), $"[대시 쿨] {cool : 0.00}", label);
-    }
-
 }

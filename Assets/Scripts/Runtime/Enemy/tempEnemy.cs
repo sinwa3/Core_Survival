@@ -189,6 +189,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
             return;
         }
 
+        toPlayer.y = 0.0f;
         Quaternion rot = Quaternion.LookRotation(toPlayer);
         Quaternion moveRot = Quaternion.Slerp(transform.rotation, rot, 1.0f - Mathf.Exp(-_rotateSpeed * Time.deltaTime));
 

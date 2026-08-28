@@ -15,7 +15,6 @@ public class PlayUI : MonoBehaviour
     [SerializeField] private PlayerLevel _playerLevel;
 
     [Header("바")]
-
     [Description("경험치 바")]
     [SerializeField] private Image _expBar;
 
@@ -24,11 +23,29 @@ public class PlayUI : MonoBehaviour
 
     [Header("레벨")]
     [SerializeField] private TMP_Text _levelText;
+
+    [Header("게임 매니저")]
+    [SerializeField] private GameManager _gameManager;
     #endregion
 
     #region 내부 변수
     private int _previousLevel;
+    private CanvasGroup _canvasGroup;
     #endregion
+
+    private void OnEnable()
+    {
+        if (_gameManager != null)
+        {
+            _gameManager.OnStateChanged += SetAlpha;
+        }
+    }
+
+    private void OnDisable()
+    {
+        _gameManager.OnStateChanged -= SetAlpha;
+    }
+
 
     private void Awake()
     {
@@ -63,6 +80,15 @@ public class PlayUI : MonoBehaviour
         if (_levelText == null)
         {
             Debug.LogWarning("레벨 텍스트 연결 안됨 / 인스펙터 확인");
+
+            return;
+        }
+
+        _canvasGroup = GetComponent<CanvasGroup>();
+
+        if (_canvasGroup == null)
+        {
+            Debug.LogWarning("캔버스 그룹 null / 확인 요망");
 
             return;
         }
@@ -104,4 +130,19 @@ public class PlayUI : MonoBehaviour
         _levelText.text = _playerLevel.Level.ToString();
         _previousLevel = _playerLevel.Level;
     }
+
+    private void SetAlpha(EGameState state)
+    {
+        switch (state)
+        {
+            case EGameState.Playing:
+                _canvasGroup.alpha = 1.0f;
+                break;
+            default:
+                _canvasGroup.alpha = 0.0f;
+                break;
+        }
+    }
+
+
 }

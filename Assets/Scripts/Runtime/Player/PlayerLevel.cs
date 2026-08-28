@@ -20,6 +20,8 @@ public class PlayerLevel : MonoBehaviour
 
     public int Level => _level;
     public int LevelBuffer => _levelBuffer;
+
+    public float ExpRatio => (_requiredExp > 0.0f) ? _currentExp / _requiredExp : 0.0f;
     public event Action OnLevelUp;
 
 
@@ -85,10 +87,5 @@ public class PlayerLevel : MonoBehaviour
     private float GetRequiredExp()
     {
         return _baseExp * Mathf.Pow(_expMultiplier, _level - 1);
-    }
-
-    private void OnGUI()
-    {
-        GUI.Label(new Rect(1000, 10, 300, 100), $"레벨 {_level}, 경험치 {_currentExp} / {_requiredExp}", _style);
     }
 }

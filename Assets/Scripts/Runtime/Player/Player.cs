@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, IDamageable
     } = true;
 
     public PlayerStats PlayerStats => _playerStats;
+    public float HpRatio => _playerStats.currentHP / _playerStats.maxHP;
 
     private void Awake()
     {

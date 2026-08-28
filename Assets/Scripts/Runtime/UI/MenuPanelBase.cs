@@ -10,7 +10,7 @@ public abstract class MenuPanelBase : MonoBehaviour
     [SerializeField] private float _duration = 0.3f;
 
     [Header("패널")]
-    [SerializeField] RectTransform _rectTransform;
+    [SerializeField] private RectTransform _rectTransform;
     [SerializeField] protected CanvasGroup _canvasGroup;
 
     [Header("게임 매니저")]

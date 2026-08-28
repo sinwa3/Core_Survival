@@ -272,6 +272,7 @@ public class SceneflowManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Time.timeScale = 1.0f;
+        AudioListener.pause = false;
         SetCurrentSceneIndex();
     }
 

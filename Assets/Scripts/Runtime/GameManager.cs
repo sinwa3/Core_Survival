@@ -128,9 +128,11 @@ public class GameManager : MonoBehaviour
         {
             case EGameState.Playing:
                 Time.timeScale = 1.0f;
+                AudioListener.pause = false;
                 break;
             default:
                 Time.timeScale = 0.0f;
+                AudioListener.pause = true;
                 break;
         }
 

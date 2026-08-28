@@ -35,6 +35,9 @@ public class TempEnemy : MonoBehaviour, IDamageable
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
     private float _attackTimer = 0.0f;
+
+    private float _baseHP;
+    private float _baseAttack;
     IDamageable _damageable;
     #endregion
 
@@ -73,6 +76,9 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
             return;
         }
+
+        _baseHP = _stats.maxHP;
+        _baseAttack = _stats.attack;
     }
 
     void Update()
@@ -132,6 +138,13 @@ public class TempEnemy : MonoBehaviour, IDamageable
     public void OnDespawn()
     {
         IsActive = false;
+    }
+
+    public void ApplyStatMultiple(float hpMulti, float attackMulti)
+    {
+        _stats.maxHP = _baseHP * hpMulti;
+        _stats.attack = _baseAttack * attackMulti;
+        _stats.currentHP = _stats.maxHP;
     }
 
     // 죽었을 때

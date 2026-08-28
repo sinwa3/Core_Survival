@@ -9,6 +9,8 @@ public class WaveData
 {
     public int minEnemy;
     public float spawnInterval;
+    public float hpMulti = 1.0f;
+    public float attackMulti = 1.0f;
 }
 
 public class EnemySpawner : MonoBehaviour
@@ -32,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("게임 매니저")]
     [SerializeField] private GameManager _gameManager;
     #endregion
+
 
 
     private void Awake()
@@ -90,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
 
             while (_pool.ActiveEnemy.Count < targetCount)
             {
-                SpawnEnemy();
+                SpawnEnemy(currentWave);
 
                 yield return null;
             }
@@ -114,10 +117,13 @@ public class EnemySpawner : MonoBehaviour
         return _waveData[index];
     }
 
-    private void SpawnEnemy()
+    // 적 스폰
+    private void SpawnEnemy(WaveData currentWave)
     {
         Vector2 pos = Random.insideUnitCircle.normalized * Random.Range(_minRange, _maxRange);
         Vector3 spawnPos = _playerTr.position + new Vector3(pos.x, 0.0f, pos.y);
-        _pool.GetEnemy(spawnPos, Quaternion.LookRotation(spawnPos - _playerTr.position));
+
+        TempEnemy enemy = _pool.GetEnemy(spawnPos, Quaternion.LookRotation(spawnPos - _playerTr.position));
+        enemy.ApplyStatMultiple(currentWave.hpMulti, currentWave.attackMulti);
     }
 }

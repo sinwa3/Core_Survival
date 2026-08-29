@@ -4,10 +4,8 @@ using UnityEngine;
 public class SkillManager : MonoBehaviour
 {
     #region 인스펙터
-    [Header("임시 스킬 프리팹")]
-    [SerializeField] private SkillEffectBase _cleavePrefab;
-    [SerializeField] private SkillEffectBase _auraPrefab;
-    [SerializeField] private SkillEffectBase _laserPrefab;
+    [Header("스킬 데이터")]
+    [SerializeField] private List<SkillDataSO> _skillDataList;
 
     [Header("적 스캔")]
     [SerializeField] private EnemyScanner _scanner;
@@ -18,6 +16,7 @@ public class SkillManager : MonoBehaviour
 
     #region 내부 변수
     private Dictionary<SkillID, SkillsBase> _skillDict = new Dictionary<SkillID, SkillsBase>();
+    private Dictionary<SkillID, SkillDataSO> _skillDataDict = new Dictionary<SkillID, SkillDataSO>();
     #endregion
 
 
@@ -30,18 +29,39 @@ public class SkillManager : MonoBehaviour
 
         if (_effectPool == null)
         {
-            Debug.LogWarning("이펙트 프리팹 null / 인스펙터 확인");
+            Debug.LogWarning("이펙트 풀 null / 인스펙터 확인");
             enabled = false;
 
             return;
         }
 
-        if (_cleavePrefab == null || _auraPrefab == null || _laserPrefab == null)
+        if (_skillDataList == null || _skillDataList.Count == 0)
         {
-            Debug.LogWarning("스킬 프리팹 null / 인스펙터 확인");
+            Debug.LogWarning("스킬 데이터 없음 / 인스펙터 확인");
             enabled = false;
 
             return;
+        }
+
+        for (int i = 0; i < _skillDataList.Count; i++)
+        {
+            SkillDataSO skillData = _skillDataList[i];
+
+            if (skillData == null)
+            {
+                Debug.LogWarning($"스킬 데이터 {i}번 null / 인스펙터 확인");
+
+                continue;
+            }
+
+            if (_skillDataDict.ContainsKey(skillData.SkillID))
+            {
+                Debug.LogWarning("딕셔너리에 등록된 스킬");
+
+                continue;
+            }
+
+            _skillDataDict.Add(skillData.SkillID, skillData);
         }
     }
 
@@ -90,14 +110,21 @@ public class SkillManager : MonoBehaviour
 
     private SkillsBase CreateSkill(SkillID skillID)
     {
+        if (!_skillDataDict.TryGetValue(skillID, out SkillDataSO skillData))
+        {
+            Debug.LogWarning("등록되지 않은 스킬");
+
+            return null;
+        }
+
         switch (skillID)
         {
             case SkillID.Cleave:
-                return new CleaveSkill(1.5f, _cleavePrefab, _effectPool);
+                return new CleaveSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
             case SkillID.DamageAura:
-                return new DamageAuraSkill(7.0f, _auraPrefab, _effectPool);
+                return new DamageAuraSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
             case SkillID.LaserBeam:
-                return new LaserBeamSkill(5.5f, _laserPrefab, _effectPool);
+                return new LaserBeamSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
             default:
                 Debug.LogWarning($"스킬 타입 미설정 / 확인 요망");
                 return null;

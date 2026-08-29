@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelUpPanel : MenuPanelBase
@@ -12,7 +10,7 @@ public class LevelUpPanel : MenuPanelBase
     [SerializeField] private LevelUpOptionButton[] _options;
 
     [Header("선택지")]
-    [SerializeField] private List<LevelUpOption> _allOptions;
+    [SerializeField] private List<LevelUpOptionSO> _allOptions;
 
     [Header("스킬 매니저")]
     [SerializeField] private SkillManager _skillManager;
@@ -27,7 +25,7 @@ public class LevelUpPanel : MenuPanelBase
     protected override void Show()
     {
         base.Show();
-        List<LevelUpOption> options = GetOptions();
+        List<LevelUpOptionSO> options = GetOptions();
 
         if (options.Count == 0)
         {
@@ -56,17 +54,9 @@ public class LevelUpPanel : MenuPanelBase
 
     private void OptionClicked(LevelUpOptionButton button)
     {
-        LevelUpOption option = button.LevelUpOption;
+        LevelUpOptionSO option = button.LevelUpOption;
 
-        switch (option.type)
-        {
-            case EOptionType.LearnSkill:
-                _skillManager.LearnSkill(option.skillId);
-                break;
-            case EOptionType.UpgradeStat:
-                StatUpgrade(option);
-                break;
-        }
+        option.Apply(_skillManager, _player);
 
         _playerLevel.UseLevelBuffer();
 
@@ -81,15 +71,22 @@ public class LevelUpPanel : MenuPanelBase
     }
 
 
-    private List<LevelUpOption> GetOptions()
+    private List<LevelUpOptionSO> GetOptions()
     {
-        List<LevelUpOption> options = new List<LevelUpOption>();
+        List<LevelUpOptionSO> options = new List<LevelUpOptionSO>();
 
         for (int i = 0; i < _allOptions.Count; i++)
         {
-            LevelUpOption option = _allOptions[i];
+            LevelUpOptionSO option = _allOptions[i];
 
-            if (option.type == EOptionType.LearnSkill && _skillManager.HasSkill(option.skillId))
+            if (option == null)
+            {
+                Debug.LogWarning($"선택지 {i}번 null / LevelUpPanel 인스펙터 확인");
+
+                continue;
+            }
+
+            if (!option.IsAvailable(_skillManager))
             {
                 continue;
             }
@@ -99,35 +96,4 @@ public class LevelUpPanel : MenuPanelBase
 
         return options;
     }
-
-    private void StatUpgrade(LevelUpOption option)
-    {
-        if (_player == null)
-        {
-            Debug.LogWarning("플레이어 컴포넌트 null / 인스펙터 확인");
-
-            return;
-        }
-
-        if (option == null)
-        {
-            Debug.LogWarning("레벨 업 옵션 null / 확인 요망"); 
-            
-            return;
-        }
-
-        switch (option.statType)
-        {
-            case EStatType.MaxHP:
-                _player.IncreaseHP(option.statAmount);
-                break;
-            case EStatType.Speed:
-                _player.IncreaseSpeed(option.statAmount);
-                break;
-            default:
-                Debug.LogWarning($"스탯 타입 미설정 / {option.optionName} 확인 요망");
-                break;
-        }
-    }
-
 }

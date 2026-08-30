@@ -62,14 +62,11 @@ public class LaserBeamEffect : SkillEffectBase
 
     public override void OnSpawn()
     {
+        base.OnSpawn();
+
         _beamStatic.UpdateBeam();
 
         StartCoroutine(Co_Life(_lifeTime));
-    }
-
-    public override void OnDespawn()
-    {
-       
     }
 
     public void Tick()

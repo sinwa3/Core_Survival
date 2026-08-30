@@ -42,6 +42,8 @@ public class DamageAuraEffect : SkillEffectBase
     
     public override void OnSpawn()
     {
+        base.OnSpawn();
+
         StartCoroutine(Co_Life(_lifeTime));
 
         // 플레이어 따라가기

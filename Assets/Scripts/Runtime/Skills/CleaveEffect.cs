@@ -15,6 +15,8 @@ public class CleaveEffect : SkillEffectBase
 
     public override void OnSpawn()
     {
+        base.OnSpawn();
+
         StartCoroutine(Co_Life(_lifeTime));
     }
 

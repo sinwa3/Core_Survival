@@ -16,7 +16,13 @@ public abstract class SkillEffectBase : MonoBehaviour
 
     #region 내부 변수
     private SkillEffectPooling _ownerPool;
+    private AudioSource _audioSource;
     #endregion
+
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
     public void SetOwnerPool(SkillEffectPooling pool)
     {
@@ -25,12 +31,18 @@ public abstract class SkillEffectBase : MonoBehaviour
 
     public virtual void OnSpawn()
     {
-
+        if (_audioSource != null)
+        {
+            _audioSource.Play();
+        }
     }
 
     public virtual void OnDespawn()
     {
-
+        if (_audioSource != null)
+        {
+            _audioSource.Stop();
+        }
     }
 
     protected virtual IEnumerator Co_Life(float skillDuration)

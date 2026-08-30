@@ -3556,7 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f5b0cb2ad71664f9d43250a2bcf3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 2089617343695891939, guid: c7f05e300e392e34fa5b2821a641e658, type: 3}
+  _enemyPrefab: {fileID: 3100536405441559351, guid: 2a63d02319b0678498ad380ddc071372, type: 3}
   _prewarmCount: 100
 --- !u!4 &116784134
 Transform:
@@ -4317,7 +4317,7 @@ MonoBehaviour:
   _dashMultiple: 2.5
   _dashDuration: 0.14
   _dashCooltime: 1
-  _control: {fileID: 0}
+  _control: {fileID: 129294314}
   _animator: {fileID: 129294312}
   _scanner: {fileID: 0}
   _gravity: -9.81
@@ -4326,7 +4326,7 @@ MonoBehaviour:
   _paramRun: bRun
   _paramDash: tDash
   _hasDash: 1
-  _player: {fileID: 0}
+  _player: {fileID: 129294320}
 --- !u!114 &129294319
 MonoBehaviour:
   m_ObjectHideFlags: 0

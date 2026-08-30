@@ -129,6 +129,11 @@ MonoBehaviour:
     exp: 50
   _attackRange: 2
   _attackInterval: 1
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 128
+  _groundCheckHeight: 2
+  _groundOffset: 0
 --- !u!54 &374549583761865358
 Rigidbody:
   m_ObjectHideFlags: 0

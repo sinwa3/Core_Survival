@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b845759d85d774241be2c6ba9aefde16, type: 3}
   m_Name: Stat_Speed
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: d577433b619aaa342834728d060068be, type: 3}
+  _icon: {fileID: 21300000, guid: 422515290f7b4ec4facd437155751b8b, type: 3}
   _optionName: "\uC2E0\uC18D"
   _description: "\uC774\uB3D9\uC18D\uB3C4\uAC00 10% \uC99D\uAC00\uD55C\uB2E4."
   _statType: 2

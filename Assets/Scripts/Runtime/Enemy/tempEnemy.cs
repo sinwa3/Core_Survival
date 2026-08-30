@@ -29,6 +29,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [Header("공격")]
     [SerializeField] private float _attackRange = 2.0f;
     [SerializeField] private float _attackInterval = 1.0f;
+
+    [Header("땅")]
+    [SerializeField] private LayerMask _groundMask = 1 << 7;
+    [SerializeField] private float _groundCheckHeight = 2.0f;
+    [SerializeField] private float _groundOffset = 0.5f;
     #endregion
 
     #region 내부 변수
@@ -84,6 +89,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
     void Update()
     {
         Vector3 toPlayer = (_playerTransform.position - transform.position);
+        toPlayer.y = 0.0f;
 
         FollowPlayer(toPlayer);
         TickRotate(toPlayer);
@@ -168,6 +174,18 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _ownerPool = pool;
     }
 
+    private float GroundY(Vector3 movePos, float groundHeight)
+    {
+        Vector3 origin = movePos + Vector3.up * _groundCheckHeight;
+
+        if (!Physics.Raycast(origin, Vector3.down, out RaycastHit hit, _groundCheckHeight * 2.0f, _groundMask))
+        {
+            return groundHeight;
+        }
+
+        return hit.point.y + _groundOffset;
+    }
+
     // 플레이어 따라가기
     private void FollowPlayer(Vector3 toPlayer)
     {
@@ -177,6 +195,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
         }
         
         Vector3 movePos = transform.position + toPlayer.normalized * _moveSpeed * Time.deltaTime;
+        float y = GroundY(movePos, transform.position.y);
+        movePos.y = Mathf.Lerp(transform.position.y, y, 1.0f - Mathf.Exp(-10.0f * Time.deltaTime));
 
         _rb.MovePosition(movePos);
     }
@@ -189,7 +209,6 @@ public class TempEnemy : MonoBehaviour, IDamageable
             return;
         }
 
-        toPlayer.y = 0.0f;
         Quaternion rot = Quaternion.LookRotation(toPlayer);
         Quaternion moveRot = Quaternion.Slerp(transform.rotation, rot, 1.0f - Mathf.Exp(-_rotateSpeed * Time.deltaTime));
 

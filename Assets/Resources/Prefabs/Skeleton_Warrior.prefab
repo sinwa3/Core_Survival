@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db2ed3d5dd2b95043a42c7cc84fd086c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.157501
+      value: -5.280533
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db2ed3d5dd2b95043a42c7cc84fd086c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.0022
+      value: 8.002195
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db2ed3d5dd2b95043a42c7cc84fd086c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 46.46485
+      value: 48.1586
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: db2ed3d5dd2b95043a42c7cc84fd086c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -253,7 +253,7 @@ MonoBehaviour:
   _enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  _pushDistance: 2
+  _pushDistance: 1.5
   _pushForce: 1
 --- !u!54 &-3197701380650304600
 Rigidbody:
@@ -301,7 +301,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 2.3
+  m_Radius: 0.4
+  m_Height: 1.4
   m_Direction: 1
-  m_Center: {x: 0, y: 1.2, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}

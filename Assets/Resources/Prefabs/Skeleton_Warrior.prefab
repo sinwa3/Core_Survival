@@ -250,6 +250,11 @@ MonoBehaviour:
     m_Bits: 128
   _groundCheckHeight: 2
   _groundOffset: 0
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _pushDistance: 2
+  _pushForce: 1
 --- !u!54 &-3197701380650304600
 Rigidbody:
   m_ObjectHideFlags: 0

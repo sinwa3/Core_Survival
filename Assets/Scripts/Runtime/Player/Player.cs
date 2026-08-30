@@ -48,8 +48,6 @@ public class Player : MonoBehaviour, IDamageable
             IsAlive = false;
             OnPlayerDead?.Invoke();
         }
-
-        Debug.Log($"플레이어 체력 {_playerStats.currentHP} / {_playerStats.maxHP}");
     }
 
     public void IncreaseHP(float amount)

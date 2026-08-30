@@ -34,12 +34,18 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask _groundMask = 1 << 7;
     [SerializeField] private float _groundCheckHeight = 2.0f;
     [SerializeField] private float _groundOffset = 0.5f;
+
+    [Header("겹침 방지")]
+    [SerializeField] private LayerMask _enemyMask = 1 << 6;
+    [SerializeField] private float _pushDistance = 0.9f;
+    [SerializeField] private float _pushForce = 1.0f;
     #endregion
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
     private float _attackTimer = 0.0f;
+    private Collider[] _nearEnemy = new Collider[16];
 
     private float _baseHP;
     private float _baseAttack;
@@ -91,7 +97,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
         Vector3 toPlayer = (_playerTransform.position - transform.position);
         toPlayer.y = 0.0f;
 
-        FollowPlayer(toPlayer);
+        TickMove(toPlayer);
         TickRotate(toPlayer);
         TickAttack(toPlayer);
     }
@@ -116,6 +122,31 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _attackTimer = 0.0f;
 
         _damageable.TakeDamage(_stats.attack);
+    }
+
+    private Vector3 GetPushVector()
+    {
+        int count = Physics.OverlapSphereNonAlloc(transform.position, _pushDistance, _nearEnemy, _enemyMask);
+        Vector3 push = Vector3.zero;
+
+        for (int i = 0; i < count; i++)
+        {
+            Vector3 dir = transform.position - _nearEnemy[i].transform.position;
+            dir.y = 0.0f;
+
+            float mag = dir.magnitude;
+
+            if (mag < 0.0001f)
+            {
+                continue;
+            }
+
+            float overlap = _pushDistance - mag;
+
+            push += (dir / mag) * overlap;
+        }
+
+        return push;
     }
 
     // 받는 데미지 계산
@@ -187,14 +218,16 @@ public class TempEnemy : MonoBehaviour, IDamageable
     }
 
     // 플레이어 따라가기
-    private void FollowPlayer(Vector3 toPlayer)
+    private void TickMove(Vector3 toPlayer)
     {
         if (toPlayer.magnitude <= _attackRange)
         {
-            return;
+            toPlayer = Vector3.zero;
         }
-        
-        Vector3 movePos = transform.position + toPlayer.normalized * _moveSpeed * Time.deltaTime;
+
+        Vector3 push = GetPushVector();
+
+        Vector3 movePos = transform.position + toPlayer.normalized * _moveSpeed * Time.deltaTime + push * _pushForce * Time.deltaTime;
         float y = GroundY(movePos, transform.position.y);
         movePos.y = Mathf.Lerp(transform.position.y, y, 1.0f - Mathf.Exp(-10.0f * Time.deltaTime));
 

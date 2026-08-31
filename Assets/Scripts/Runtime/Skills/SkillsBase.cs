@@ -19,6 +19,21 @@ public abstract class SkillsBase
     // 타겟 유무
     public virtual bool NeedTarget => true;
 
+    public float CooldownRemainRatio
+    {
+        get
+        {
+            if (skillCooldown == 0.0f)
+            {
+                return 0.0f;
+            }
+
+            float ratio = Mathf.Clamp01(skillTimer / skillCooldown);
+
+            return 1.0f - ratio;
+        }
+    }
+
     public SkillsBase(float skillCool, SkillEffectBase prefab, SkillEffectPooling effectPool)
     {
         skillCooldown = skillCool;

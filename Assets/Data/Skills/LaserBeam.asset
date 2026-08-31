@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LaserBeam
   m_EditorClassIdentifier: 
   _skillID: 3
-  _icon: {fileID: 21300000, guid: 628015e12fbc62140a96c8828af2fc69, type: 3}
+  _icon: {fileID: 21300000, guid: c5643703a9f237f4f8b32b9b6e768b03, type: 3}
   _effectPrefab: {fileID: -1769670667779776747, guid: 949755faf8121e347b117029c2b30d85, type: 3}
   _cooldown: 5.5

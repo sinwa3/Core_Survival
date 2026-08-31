@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillManager : MonoBehaviour
@@ -19,6 +20,9 @@ public class SkillManager : MonoBehaviour
     private Dictionary<SkillID, SkillDataSO> _skillDataDict = new Dictionary<SkillID, SkillDataSO>();
     #endregion
 
+    public IReadOnlyDictionary<SkillID, SkillsBase> Skills => _skillDict;
+
+    public event Action<SkillID> OnSkillLearned;
 
     private void Awake()
     {
@@ -97,6 +101,7 @@ public class SkillManager : MonoBehaviour
         }
 
         _skillDict.Add(skill.SkillID, skill);
+        OnSkillLearned?.Invoke(skill.SkillID);
 
         return true;
     }
@@ -134,6 +139,18 @@ public class SkillManager : MonoBehaviour
     public bool HasSkill(SkillID skillID)
     {
         return _skillDict.ContainsKey(skillID);
+    }
+
+    public SkillDataSO GetSkillData(SkillID skillID)
+    {
+        if (!_skillDataDict.TryGetValue(skillID, out SkillDataSO skillData))
+        {
+            Debug.LogWarning("SkillID에 맞는 스킬 데이터 없음 null 반환");
+
+            return null;
+        }
+
+        return skillData;
     }
 
 

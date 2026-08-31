@@ -39,13 +39,18 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask _enemyMask = 1 << 6;
     [SerializeField] private float _pushDistance = 0.9f;
     [SerializeField] private float _pushForce = 1.0f;
+
+    [Header("애니메이션")]
+    [SerializeField] private Animator _animator;
+    [SerializeField] private string _paramRun = "bRun";
     #endregion
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
-    private float _attackTimer = 0.0f;
     private Collider[] _nearEnemy = new Collider[16];
+    private float _attackTimer = 0.0f;
+    private int _hashRun;
 
     private float _baseHP;
     private float _baseAttack;
@@ -88,8 +93,15 @@ public class TempEnemy : MonoBehaviour, IDamageable
             return;
         }
 
+        if (_animator == null)
+        {
+            _animator = GetComponentInChildren<Animator>();
+        }
+
         _baseHP = _stats.maxHP;
         _baseAttack = _stats.attack;
+
+        _hashRun = Animator.StringToHash(_paramRun);
     }
 
     void Update()
@@ -100,6 +112,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
         TickMove(toPlayer);
         TickRotate(toPlayer);
         TickAttack(toPlayer);
+
+        
     }
 
     // 공격
@@ -224,6 +238,9 @@ public class TempEnemy : MonoBehaviour, IDamageable
         {
             toPlayer = Vector3.zero;
         }
+
+        bool isRunning = (toPlayer.sqrMagnitude > 0.001f);
+        _animator.SetBool(_hashRun, isRunning);
 
         Vector3 push = GetPushVector();
 

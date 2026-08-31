@@ -47,7 +47,7 @@ public class PausePanel : MenuPanelBase
     {
         base.Show();
 
-        _health.text = $"{_player.PlayerStats.maxHP : 0}";
+        _health.text = $"{_player.PlayerStats.maxHP:0}";
         _attackRatio.text = $"{_player.PlayerStats.attack * 100:0}%";
         _speedRatio.text = $"{_player.PlayerStats.speed * 100:0}%";
     }

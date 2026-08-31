@@ -43,14 +43,18 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [Header("애니메이션")]
     [SerializeField] private Animator _animator;
     [SerializeField] private string _paramRun = "bRun";
+    [SerializeField] private string _paramAttack = "tAttack";
     #endregion
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
     private Collider[] _nearEnemy = new Collider[16];
+
     private float _attackTimer = 0.0f;
     private int _hashRun;
+    private int _hashAttack;
+    private bool _isAttacking;
 
     private float _baseHP;
     private float _baseAttack;
@@ -102,6 +106,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _baseAttack = _stats.attack;
 
         _hashRun = Animator.StringToHash(_paramRun);
+        _hashAttack = Animator.StringToHash(_paramAttack);
     }
 
     void Update()
@@ -109,16 +114,19 @@ public class TempEnemy : MonoBehaviour, IDamageable
         Vector3 toPlayer = (_playerTransform.position - transform.position);
         toPlayer.y = 0.0f;
 
+        TickAttack(toPlayer);
         TickMove(toPlayer);
         TickRotate(toPlayer);
-        TickAttack(toPlayer);
-
-        
     }
 
     // 공격
     private void TickAttack(Vector3 toPlayer)
     {
+        if (_isAttacking)
+        {
+            return;
+        }
+
         float sqrRange = _attackRange * _attackRange;
 
         if (toPlayer.sqrMagnitude >= sqrRange)
@@ -134,8 +142,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
         }
 
         _attackTimer = 0.0f;
-
-        _damageable.TakeDamage(_stats.attack);
+        _isAttacking = true;
+        _animator.SetTrigger(_hashAttack);
     }
 
     private Vector3 GetPushVector()
@@ -184,6 +192,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
     {
         IsActive = true;
         _stats.currentHP = _stats.maxHP;
+        _isAttacking = false;
+        _attackTimer = 0.0f;
     }
 
     public void OnDespawn()
@@ -219,6 +229,40 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _ownerPool = pool;
     }
 
+    // 애니메이터 이벤트용
+    public void OnAttackHit()
+    {
+        if (_damageable == null)
+        {
+            Debug.LogWarning("데미지 인터페이스 null (TempEnemy) / 확인 요망");
+
+            return;
+        }
+
+        if (_playerTransform == null)
+        {
+            Debug.LogWarning("플레이어 트랜스폼 null (TempEnemy) / 확인 요망");
+
+            return;
+        }
+
+        Vector3 dir = _playerTransform.position - transform.position;
+        dir.y = 0.0f;
+
+        if (dir.sqrMagnitude > _attackRange * _attackRange)
+        {
+            return;
+        }
+
+        _damageable.TakeDamage(_stats.attack);
+    }
+
+    // 애니메이터 이벤트용
+    public void OnAttackEnd()
+    {
+        _isAttacking = false;
+    }
+
     private float GroundY(Vector3 movePos, float groundHeight)
     {
         Vector3 origin = movePos + Vector3.up * _groundCheckHeight;
@@ -234,7 +278,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
     // 플레이어 따라가기
     private void TickMove(Vector3 toPlayer)
     {
-        if (toPlayer.magnitude <= _attackRange)
+        if (toPlayer.magnitude <= _attackRange || _isAttacking)
         {
             toPlayer = Vector3.zero;
         }
@@ -254,6 +298,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
     // 플레이어쪽으로 돌기
     private void TickRotate(Vector3 toPlayer)
     {
+        if (_isAttacking)
+        {
+            return;
+        }
+
         if (toPlayer.sqrMagnitude < 0.0001f)
         {
             return;

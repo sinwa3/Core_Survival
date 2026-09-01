@@ -44,16 +44,21 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [SerializeField] private Animator _animator;
     [SerializeField] private string _paramRun = "bRun";
     [SerializeField] private string _paramAttack = "tAttack";
+    [SerializeField] private string _paramDead = "tDead";
+
+    [SerializeField] private float _deadDuration = 0.9f;
     #endregion
 
     #region 내부 변수
     private EnemyPooling _ownerPool;
     private Rigidbody _rb;
+    private Collider _myCollider;
     private Collider[] _nearEnemy = new Collider[16];
 
     private float _attackTimer = 0.0f;
     private int _hashRun;
     private int _hashAttack;
+    private int _hashDead;
     private bool _isAttacking;
 
     private float _baseHP;
@@ -71,6 +76,10 @@ public class TempEnemy : MonoBehaviour, IDamageable
         get; private set;
     }
 
+    public bool IsDead
+    {
+        get; private set;
+    }
     private void Awake()
     {
         if (_playerTransform == null)
@@ -86,6 +95,15 @@ public class TempEnemy : MonoBehaviour, IDamageable
             {
                 Debug.LogWarning("Player 태그 오브젝트 찾을 수 없음");
             }
+        }
+
+        _myCollider = GetComponent<Collider>();
+
+        if (_myCollider == null)
+        {
+            Debug.LogWarning("적 콜라이더 null (TempEnemy) / 확인 요망");
+
+            return;
         }
 
         _rb = GetComponent<Rigidbody>();
@@ -107,10 +125,16 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
         _hashRun = Animator.StringToHash(_paramRun);
         _hashAttack = Animator.StringToHash(_paramAttack);
+        _hashDead = Animator.StringToHash(_paramDead);
     }
 
     void Update()
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         Vector3 toPlayer = (_playerTransform.position - transform.position);
         toPlayer.y = 0.0f;
 
@@ -191,14 +215,23 @@ public class TempEnemy : MonoBehaviour, IDamageable
     public void OnSpawn()
     {
         IsActive = true;
+        IsDead = false;
         _stats.currentHP = _stats.maxHP;
         _isAttacking = false;
         _attackTimer = 0.0f;
+        _myCollider.enabled = true;
     }
 
     public void OnDespawn()
     {
         IsActive = false;
+        IsDead = true;
+        _myCollider.enabled = false;
+    }
+    
+    public void OnRecycle()
+    {
+        IsDead = false;
     }
 
     public void ApplyStatMultiple(float hpMulti, float attackMulti)
@@ -211,16 +244,25 @@ public class TempEnemy : MonoBehaviour, IDamageable
     // 죽었을 때
     public void DestroyThis()
     {
-        if (_ownerPool != null)
+        if (_ownerPool == null)
         {
-            _ownerPool.ReturnEnemy(this);
+            // 풀 미연결 시 파괴
+            IsActive = false;
+            Destroy(gameObject);
 
             return;
         }
 
-        // 풀 미연결 시 파괴
-        IsActive = false;
-        Destroy(gameObject);
+        _animator.SetTrigger(_hashDead);
+        _ownerPool.DespawnEnemy(this);
+
+        StartCoroutine(Co_Dead());
+    }
+
+    private IEnumerator Co_Dead()
+    {
+        yield return new WaitForSeconds(_deadDuration);
+        _ownerPool.RecycleEnemy(this);
     }
 
     // 풀 종류 설정

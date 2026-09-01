@@ -79,7 +79,7 @@ public class EnemyPooling : MonoBehaviour
     }
 
     // 적 반납
-    public void ReturnEnemy(TempEnemy enemy)
+    public void DespawnEnemy(TempEnemy enemy)
     {
         if (enemy == null)
         {
@@ -96,13 +96,27 @@ public class EnemyPooling : MonoBehaviour
         }
 
         enemy.OnDespawn();
+        OnEnemyReturn?.Invoke(enemy);
+        _activeEnemy.Remove(enemy);
+    }
+
+    public void RecycleEnemy(TempEnemy enemy)
+    {
+        if (enemy == null)
+        {
+            Debug.LogWarning("적 반환 불가 / null인 적");
+
+            return;
+        }
+
+        if (!enemy.IsDead)
+        {
+            return;
+        }
+
+        enemy.OnRecycle();
         enemy.gameObject.SetActive(false);
         _enemyPool.Enqueue(enemy);
-        OnEnemyReturn?.Invoke(enemy);
-
-        _activeEnemy.Remove(enemy);
-
-        Debug.Log("적 반환 성공");
     }
 
 

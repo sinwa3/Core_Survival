@@ -6,7 +6,6 @@ public class DamageAuraEffect : SkillEffectBase
 
     #region 인스펙터
     [Header("스킬 옵션")]
-    [SerializeField] private float _damage = 5.0f;
     [SerializeField] private float _lifeTime = 5.0f;
 
     [Header("충돌 태그")]
@@ -22,8 +21,10 @@ public class DamageAuraEffect : SkillEffectBase
     #region 내부 변수
     private float _timer = 0.0f;
     #endregion
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (_playerTransform == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -58,11 +59,11 @@ public class DamageAuraEffect : SkillEffectBase
 
             if (enemy != null)
             {
-                enemy.TakeDamage(_damage);
+                enemy.TakeDamage(SkillDamage);
 
                 if (printLog)
                 {
-                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
+                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {SkillDamage}의 데미지");
                 }
             }
         }
@@ -86,11 +87,11 @@ public class DamageAuraEffect : SkillEffectBase
 
             if (enemy != null)
             {
-                enemy.TakeDamage(_damage);
+                enemy.TakeDamage(SkillDamage);
 
                 if (printLog)
                 {
-                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
+                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {SkillDamage}의 데미지");
                 }
             }
         }

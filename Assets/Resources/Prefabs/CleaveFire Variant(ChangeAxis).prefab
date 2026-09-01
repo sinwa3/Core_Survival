@@ -68,7 +68,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39121c4ba193432449f0299556cd7ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 20
   _lifeTime: 0.9
   _enemyTag: Enemy
 --- !u!82 &-6973939317320893080
@@ -82,7 +81,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 938dcba4fdd93bd4898e7b524ce1606a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
   Loop: 0

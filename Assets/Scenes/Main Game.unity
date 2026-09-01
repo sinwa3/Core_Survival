@@ -3611,17 +3611,25 @@ MonoBehaviour:
     hpMulti: 1.7
     attackMulti: 1.7
   - minEnemy: 25
-    spawnInterval: 2
+    spawnInterval: 1.5
     hpMulti: 1.7
     attackMulti: 1.7
   - minEnemy: 30
-    spawnInterval: 2
+    spawnInterval: 1.5
     hpMulti: 2
     attackMulti: 2
   - minEnemy: 35
-    spawnInterval: 2
+    spawnInterval: 1.5
     hpMulti: 2.2
     attackMulti: 2.2
+  - minEnemy: 40
+    spawnInterval: 1.5
+    hpMulti: 2.5
+    attackMulti: 2.5
+  - minEnemy: 50
+    spawnInterval: 1.5
+    hpMulti: 2.5
+    attackMulti: 2.5
   _waveDuration: 20
   _maxEnemy: 100
   _gameManager: {fileID: 841206366}
@@ -22170,6 +22178,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 51ad28cb438b4d6488d04c7f5831cdb2, type: 2}
   - {fileID: 11400000, guid: 4d70cb59dd2a7f746bd0ca2527359e70, type: 2}
   - {fileID: 11400000, guid: 10d35bdf452687c43bd9bbb9346b99b2, type: 2}
+  - {fileID: 11400000, guid: 9a7f920826b44964b94aff31bf8de2ef, type: 2}
+  - {fileID: 11400000, guid: 2fa9cce1d3357da4aa7c0cea4df7be0a, type: 2}
+  - {fileID: 11400000, guid: fb357ce4368fca24480417e00b5f3ffe, type: 2}
+  - {fileID: 11400000, guid: 27e37f58667be1f44b6b3a4b8dce5898, type: 2}
   _skillManager: {fileID: 129294319}
   _playerLevel: {fileID: 841206369}
   _player: {fileID: 129294320}

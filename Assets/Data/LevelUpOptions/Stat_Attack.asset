@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b845759d85d774241be2c6ba9aefde16, type: 3}
+  m_Name: Stat_Attack
+  m_EditorClassIdentifier: 
+  _icon: {fileID: 21300000, guid: 0d06a430a2fae1c4c842b86cefcbdb5a, type: 3}
+  _optionName: "\uACF5\uACA9\uB825 \uC99D\uAC00"
+  _description: "\uACF5\uACA9\uB825\uC774 10% \uC99D\uAC00\uD55C\uB2E4."
+  _statType: 3
+  _statAmount: 0.1

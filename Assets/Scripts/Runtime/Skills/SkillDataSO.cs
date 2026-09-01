@@ -8,11 +8,20 @@ public class SkillDataSO : ScriptableObject
     [SerializeField] private Sprite _icon;
     [SerializeField] private SkillEffectBase _effectPrefab;
     [SerializeField] private float _cooldown;
+
+    [Header("데미지")]
+    [SerializeField] private float _baseDamage;
+    [SerializeField] private int _maxUpgradeLevel = 5;
+    [SerializeField] private float _damagePerLevel = 0.2f;
     #endregion
 
     public SkillID SkillID => _skillID;
     public Sprite Icon => _icon;
     public float Cooldown => _cooldown;
     public SkillEffectBase EffectPrefab => _effectPrefab;
+    public float BaseDamage => _baseDamage;
+    public int MaxUpgradeLevel => _maxUpgradeLevel;
+
+    public float DamagePerLevel => _damagePerLevel;
 
 }

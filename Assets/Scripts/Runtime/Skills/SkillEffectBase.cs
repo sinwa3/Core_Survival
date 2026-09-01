@@ -12,14 +12,17 @@ public abstract class SkillEffectBase : MonoBehaviour
     public bool printLog
     {
         get; protected set;
-    } = false;
+    } = true;
 
     #region 내부 변수
     private SkillEffectPooling _ownerPool;
     private AudioSource _audioSource;
+    private float _skillDamage;
     #endregion
 
-    private void Awake()
+    protected float SkillDamage => _skillDamage;
+
+    protected virtual void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }
@@ -43,6 +46,11 @@ public abstract class SkillEffectBase : MonoBehaviour
         {
             _audioSource.Stop();
         }
+    }
+
+    public void SetSkillDamage(float damage)
+    {
+        _skillDamage = damage;
     }
 
     protected virtual IEnumerator Co_Life(float skillDuration)

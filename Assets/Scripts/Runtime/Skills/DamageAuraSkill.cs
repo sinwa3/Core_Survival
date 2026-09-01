@@ -6,15 +6,22 @@ public class DamageAuraSkill : SkillsBase
 
     public override bool NeedTarget => false;
 
-    public DamageAuraSkill(float skillCool, SkillEffectBase prefab, SkillEffectPooling pool) : base (skillCool, prefab, pool)
+    public DamageAuraSkill(SkillDataSO dataSO, SkillEffectPooling pool) : base(dataSO, pool)
     {
 
     }
 
-    protected override void UseSkill(Transform player, Transform target)
+    protected override void UseSkill(Player player, Transform target)
     {
-        skillEffectPool.GetEffect(SkillID, skillPrefab, player.position, player.rotation);
+        SkillEffectBase effect = skillEffectPool.GetEffect(SkillID, SkillPrefab, player.transform.position, player.transform.rotation);
 
-        Debug.Log("데미지 아우라 스킬 사용 성공");
+        if (effect == null)
+        {
+            Debug.LogWarning("이펙트 null (DamageAuraSkill) / 스킬 사용 실패");
+
+            return;
+        }
+
+        effect.SetSkillDamage(CalcDamage(player));
     }
 }

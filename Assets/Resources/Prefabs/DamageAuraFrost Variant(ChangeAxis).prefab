@@ -68,7 +68,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbe2bea6a219664daf1d553eaa601ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
   _lifeTime: 5
   _enemyTag: Enemy
   _damageInterval: 0.3
@@ -84,7 +83,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e10960dbb53f9f84ab786eef2c48a4e0, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
   Loop: 1

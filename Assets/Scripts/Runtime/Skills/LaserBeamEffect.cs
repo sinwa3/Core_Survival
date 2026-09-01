@@ -9,7 +9,6 @@ public class LaserBeamEffect : SkillEffectBase
 
     #region 인스펙터
     [Header("스킬 옵션")]
-    [SerializeField] private float _damage = 5.0f;
     [SerializeField] private float _lifeTime = 3.0f;
 
     [Header("충돌 태그")]
@@ -31,8 +30,10 @@ public class LaserBeamEffect : SkillEffectBase
     private bool _hasHit;
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
         if (player == null)
@@ -93,11 +94,11 @@ public class LaserBeamEffect : SkillEffectBase
                 return;
             }
 
-            enemy.TakeDamage(_damage);
+            enemy.TakeDamage(SkillDamage);
 
             if (printLog)
             {
-                Debug.Log($"{SkillID} 스킬로 {_damage}의 데미지");
+                Debug.Log($"{SkillID} 스킬로 {SkillDamage}의 데미지");
             }
         }
     }

@@ -18,6 +18,7 @@ public class SkillManager : MonoBehaviour
     #region 내부 변수
     private Dictionary<SkillID, SkillsBase> _skillDict = new Dictionary<SkillID, SkillsBase>();
     private Dictionary<SkillID, SkillDataSO> _skillDataDict = new Dictionary<SkillID, SkillDataSO>();
+    private Player _player;
     #endregion
 
     public IReadOnlyDictionary<SkillID, SkillsBase> Skills => _skillDict;
@@ -34,6 +35,16 @@ public class SkillManager : MonoBehaviour
         if (_effectPool == null)
         {
             Debug.LogWarning("이펙트 풀 null / 인스펙터 확인");
+            enabled = false;
+
+            return;
+        }
+
+        _player = GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogWarning("플레이어 null (SkillManager) / 확인 요망");
             enabled = false;
 
             return;
@@ -80,7 +91,7 @@ public class SkillManager : MonoBehaviour
 
         foreach (var skill in _skillDict.Values)
         {
-            skill.TickCooltime(transform, nearEnemy);
+            skill.TickCooltime(_player, nearEnemy);
         }
     }
 
@@ -113,6 +124,28 @@ public class SkillManager : MonoBehaviour
         return LearnSkill(skill);
     }
 
+    public void UpgradeSkill(SkillID skillID)
+    {
+        if (!_skillDict.TryGetValue(skillID, out SkillsBase skill))
+        {
+            Debug.LogWarning("스킬 미보유 / 스킬 업그레이드 불가");
+
+            return;
+        }
+
+        skill.UpgradeSkill();
+    }
+
+    public bool CanUpgradeSkill(SkillID skillID)
+    {
+        if (!_skillDict.TryGetValue(skillID, out SkillsBase skill))
+        {
+            return false;
+        }
+
+        return skill.CanSkillUpgrade;
+    }
+
     private SkillsBase CreateSkill(SkillID skillID)
     {
         if (!_skillDataDict.TryGetValue(skillID, out SkillDataSO skillData))
@@ -125,11 +158,11 @@ public class SkillManager : MonoBehaviour
         switch (skillID)
         {
             case SkillID.Cleave:
-                return new CleaveSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
+                return new CleaveSkill(skillData, _effectPool);
             case SkillID.DamageAura:
-                return new DamageAuraSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
+                return new DamageAuraSkill(skillData, _effectPool);
             case SkillID.LaserBeam:
-                return new LaserBeamSkill(skillData.Cooldown, skillData.EffectPrefab, _effectPool);
+                return new LaserBeamSkill(skillData, _effectPool);
             default:
                 Debug.LogWarning($"스킬 타입 미설정 / 확인 요망");
                 return null;

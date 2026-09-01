@@ -80,4 +80,9 @@ public class Player : MonoBehaviour, IDamageable
     {
         _playerStats.speed += amount;
     }
+
+    public void IncreaseAttack(float amount)
+    {
+        _playerStats.attack += amount;
+    }
 }

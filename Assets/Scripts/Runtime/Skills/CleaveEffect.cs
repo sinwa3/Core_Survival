@@ -6,7 +6,6 @@ public class CleaveEffect : SkillEffectBase
 
     #region 인스펙터
     [Header("스킬 옵션")]
-    [SerializeField] private float _damage = 20.0f;
     [SerializeField] private float _lifeTime = 0.9f;
 
     [Header("충돌 태그")]
@@ -28,11 +27,11 @@ public class CleaveEffect : SkillEffectBase
 
             if (enemy != null)
             {
-                enemy.TakeDamage(_damage);
+                enemy.TakeDamage(SkillDamage);
 
                 if (printLog)
                 {
-                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {_damage}의 데미지");
+                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {SkillDamage}의 데미지");
                 }
             }
         }

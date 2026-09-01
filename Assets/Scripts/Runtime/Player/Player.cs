@@ -17,9 +17,18 @@ public class Player : MonoBehaviour, IDamageable
     #region 인스펙터 
     [Header("스텟")]
     [SerializeField] private PlayerStats _playerStats;
+
+    [Header("무적")]
+    [SerializeField] private float _invincibleDuration = 0.4f;
+    #endregion
+
+    #region 내부 변수
+    private float _invincibleUntil;
     #endregion
 
     public event Action OnPlayerDead;
+    public event Action OnDamaged;
+    public bool IsInvincible => Time.time < _invincibleUntil;
 
     public bool IsAlive
     {
@@ -41,13 +50,24 @@ public class Player : MonoBehaviour, IDamageable
             return;
         }
 
+        if (IsInvincible)
+        {
+            return;
+        }
+
+        _invincibleUntil = Time.time + _invincibleDuration;
+
         _playerStats.currentHP -= damage;
 
         if (_playerStats.currentHP <= 0)
         {
             IsAlive = false;
             OnPlayerDead?.Invoke();
+
+            return;
         }
+
+        OnDamaged?.Invoke();
     }
 
     public void IncreaseHP(float amount)

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef07771c21a6c5458ecaea1b419a387, type: 3}
+  m_Name: LearnSkill_Orbit
+  m_EditorClassIdentifier: 
+  _optionName: "\uADA4\uB3C4"
+  _description: "\uC8FC\uC704\uB97C \uB3CC\uBA70 \uC801\uC744 \uACF5\uACA9\uD558\uB294
+    \uC704\uC131\uC740 \uC18C\uD658\uD55C\uB2E4."
+  _skillData: {fileID: 11400000, guid: f2c4eb8885f719a408dca89b1e0f20f3, type: 2}

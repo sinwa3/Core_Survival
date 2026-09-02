@@ -8,6 +8,7 @@ public class SkillDataSO : ScriptableObject
     [SerializeField] private Sprite _icon;
     [SerializeField] private SkillEffectBase _effectPrefab;
     [SerializeField] private float _cooldown;
+    [SerializeField] private int _effectCountPerCast = 1;
 
     [Header("데미지")]
     [SerializeField] private float _baseDamage;
@@ -24,4 +25,5 @@ public class SkillDataSO : ScriptableObject
 
     public float DamagePerLevel => _damagePerLevel;
 
+    public int EffectCountPerCast => _effectCountPerCast;
 }

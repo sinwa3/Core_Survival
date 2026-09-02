@@ -26,6 +26,9 @@ public abstract class SkillsBase
     public bool CanSkillUpgrade => CurrentSkillLevel < MaxUpgradeLevel;
 
     public float DamageMultiplier => 1.0f + (skillData.DamagePerLevel * (CurrentSkillLevel - 1));
+
+    protected int EffectCountPerCast => skillData.EffectCountPerCast;
+
     public float CooldownRemainRatio
     {
         get

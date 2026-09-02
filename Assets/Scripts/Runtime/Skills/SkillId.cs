@@ -4,5 +4,6 @@
     Cleave = 1,
     DamageAura = 2,
     LaserBeam = 3,
-    Missile = 4
+    Missile = 4,
+    Orbit = 5
 }

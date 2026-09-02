@@ -163,6 +163,8 @@ public class SkillManager : MonoBehaviour
                 return new DamageAuraSkill(skillData, _effectPool);
             case SkillID.LaserBeam:
                 return new LaserBeamSkill(skillData, _effectPool);
+            case SkillID.Missile:
+                return new MissileSkill(skillData, _effectPool);
             default:
                 Debug.LogWarning($"스킬 타입 미설정 / 확인 요망");
                 return null;

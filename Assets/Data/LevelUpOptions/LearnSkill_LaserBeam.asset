@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef07771c21a6c5458ecaea1b419a387, type: 3}
   m_Name: LearnSkill_LaserBeam
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: c5643703a9f237f4f8b32b9b6e768b03, type: 3}
   _optionName: "\uB808\uC774\uC800 \uBE54"
   _description: "\uC77C\uC815 \uAC04\uACA9\uC73C\uB85C \uB79C\uB364\uD55C \uBC29\uD5A5\uC73C\uB85C
     \uACF5\uACA9\uD558\uB294 \uBE54\uC744 \uBC1C\uC0AC\uD55C\uB2E4."
-  _skillID: 3
+  _skillData: {fileID: 11400000, guid: cc27615b2e6ed764db804ade81a6aa07, type: 2}

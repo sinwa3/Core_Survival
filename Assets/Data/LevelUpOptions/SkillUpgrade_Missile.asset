@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a92e82d5b6a55c04faa8a45bd7fd82d7, type: 3}
-  m_Name: SkillUpgrade_LaserBeam
+  m_Name: SkillUpgrade_Missile
   m_EditorClassIdentifier: 
-  _optionName: "\uB370\uBBF8\uC9C0 \uACC4\uC218 \uAC15\uD654 (\uB808\uC774\uC800)"
+  _optionName: "\uB370\uBBF8\uC9C0 \uACC4\uC218 \uAC15\uD654 (\uBBF8\uC0AC\uC77C)"
   _description: "\uB370\uBBF8\uC9C0 \uACC4\uC218\uAC00 20% \uC99D\uAC00\uD55C\uB2E4."
-  _skillData: {fileID: 11400000, guid: cc27615b2e6ed764db804ade81a6aa07, type: 2}
+  _skillData: {fileID: 11400000, guid: e6ab2fe58b434f146b3d526463117994, type: 2}

@@ -5,8 +5,10 @@ public class LearnSkillOptionSO : LevelUpOptionSO
 {
     #region 인스펙터
     [Header("부분")]
-	[SerializeField] private SkillID _skillID;
+	[SerializeField] private SkillDataSO _skillData;
     #endregion
+
+    public override Sprite Icon => _skillData != null ? _skillData.Icon : null;
 
     public override void Apply(SkillManager skillManager, Player player)
     {
@@ -17,14 +19,21 @@ public class LearnSkillOptionSO : LevelUpOptionSO
             return;
         }
 
-        skillManager.LearnSkill(_skillID);
+        if(_skillData == null)
+        {
+            Debug.LogWarning($"스킬 데이터 미설정 / {OptionName} 에셋 확인 요망");
+
+            return;
+        }
+
+        skillManager.LearnSkill(_skillData.SkillID);
     }
 
     public override bool IsAvailable(SkillManager skillManager)
     {
-        if (_skillID == SkillID.None)
+        if(_skillData == null)
         {
-            Debug.LogWarning($"스킬 ID 미설정 / {OptionName} 에셋 확인 요망");
+            Debug.LogWarning($"스킬 데이터 미설정 / {OptionName} 에셋 확인 요망");
 
             return false;
         }
@@ -36,12 +45,7 @@ public class LearnSkillOptionSO : LevelUpOptionSO
             return false;
         }
 
-        if (skillManager.HasSkill(_skillID))
-        {
-            return false;
-        }
-
-        return true;
+        return !skillManager.HasSkill(_skillData.SkillID);
     }
 
 }

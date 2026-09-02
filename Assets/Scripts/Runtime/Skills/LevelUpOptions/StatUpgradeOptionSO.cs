@@ -13,9 +13,12 @@ public class StatUpgradeOptionSO : LevelUpOptionSO
 {
     #region 인스펙터
     [Header("부분")]
+    [SerializeField] private Sprite _icon;
     [SerializeField] private EStatType _statType;
     [SerializeField] private float _statAmount = 0.0f;
     #endregion
+
+    public override Sprite Icon => _icon;
 
     public override void Apply(SkillManager skillManager, Player player)
     {

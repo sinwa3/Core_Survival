@@ -57,6 +57,11 @@ public abstract class SkillEffectBase : MonoBehaviour
     {
         yield return new WaitForSeconds(skillDuration);
 
+        ReturnToPool();
+    }
+
+    protected void ReturnToPool()
+    {
         _ownerPool.ReturnSkillEffectPool(this);
     }
 }

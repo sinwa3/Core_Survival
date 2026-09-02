@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef07771c21a6c5458ecaea1b419a387, type: 3}
   m_Name: LearnSkill_DamageAura
   m_EditorClassIdentifier: 
-  _icon: {fileID: 21300000, guid: ab84d013438f84c41aef7c0ad9337a37, type: 3}
   _optionName: "\uB370\uBBF8\uC9C0 \uC624\uB77C"
   _description: "\uC77C\uC815 \uAC04\uACA9\uC73C\uB85C \uC8FC\uBCC0 \uC801\uC5D0\uAC8C
     \uC9C0\uC18D\uC801\uC73C\uB85C \uD53C\uD574\uB97C \uC8FC\uB294 \uC624\uB77C\uB97C
     \uC18C\uD658\uD55C\uB2E4."
-  _skillID: 2
+  _skillData: {fileID: 11400000, guid: 27e8699bdac53714aab2ad35ff93eeb9, type: 2}

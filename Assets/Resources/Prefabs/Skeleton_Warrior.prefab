@@ -255,6 +255,11 @@ MonoBehaviour:
     m_Bits: 64
   _pushDistance: 1.5
   _pushForce: 1
+  _animator: {fileID: 0}
+  _paramRun: bRun
+  _paramAttack: tAttack
+  _paramDead: tDead
+  _deadDuration: 0.9
 --- !u!54 &-3197701380650304600
 Rigidbody:
   m_ObjectHideFlags: 0

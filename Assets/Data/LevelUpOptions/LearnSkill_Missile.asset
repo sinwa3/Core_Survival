@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ef07771c21a6c5458ecaea1b419a387, type: 3}
-  m_Name: LearnSkill_Cleave
+  m_Name: LearnSkill_Missile
   m_EditorClassIdentifier: 
-  _optionName: "\uAC00\uC2DC"
-  _description: "\uC77C\uC815 \uAC04\uACA9\uC73C\uB85C \uBC14\uB2E5\uC5D0\uC11C \uAC00\uC2DC\uAC00
-    \uC62C\uB77C\uC640 \uC801\uC744 \uACF5\uACA9\uD55C\uB2E4."
-  _skillData: {fileID: 11400000, guid: 227979ba13162bb4aa1b9d1b8ce94433, type: 2}
+  _optionName: "\uBBF8\uC0AC\uC77C"
+  _description: "\uBBF8\uC0AC\uC77C\uC744 \uBC1C\uC0AC\uD558\uC5EC \uB9DE\uB294 \uCCAB
+    \uC801\uC5D0\uAC8C \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
+  _skillData: {fileID: 11400000, guid: e6ab2fe58b434f146b3d526463117994, type: 2}

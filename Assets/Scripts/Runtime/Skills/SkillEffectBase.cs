@@ -22,6 +22,12 @@ public abstract class SkillEffectBase : MonoBehaviour
 
     protected float SkillDamage => _skillDamage;
 
+    public bool IsPooled
+    {
+        get; private set;
+    }
+
+
     protected virtual void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -38,6 +44,8 @@ public abstract class SkillEffectBase : MonoBehaviour
         {
             _audioSource.Play();
         }
+
+        IsPooled = false;
     }
 
     public virtual void OnDespawn()
@@ -46,6 +54,8 @@ public abstract class SkillEffectBase : MonoBehaviour
         {
             _audioSource.Stop();
         }
+
+        IsPooled = true;
     }
 
     public void SetSkillDamage(float damage)

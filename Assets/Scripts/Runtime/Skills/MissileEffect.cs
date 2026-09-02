@@ -35,7 +35,7 @@ public class MissileEffect : SkillEffectBase
             return;
         }
 
-        if(string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
+        if(!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
         {
             IDamageable enemy = other.GetComponent<IDamageable>();
 

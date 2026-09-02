@@ -18,9 +18,16 @@ public class SkillEffectPooling : MonoBehaviour
             return;
         }
 
-        if (_skillPools[skill.SkillID].Contains(skill))
+        if (skill.IsPooled)
         {
             Debug.LogWarning("스킬 반환 불가 / 중복 반환");
+
+            return;
+        }
+
+        if (!_skillPools.TryGetValue(skill.SkillID, out Queue<SkillEffectBase> pool))
+        {
+            Debug.LogWarning($"스킬 반환 불가 / 스킬 ID {skill.SkillID}에 대한 풀을 찾을 수 없음");
 
             return;
         }
@@ -28,7 +35,8 @@ public class SkillEffectPooling : MonoBehaviour
         skill.OnDespawn();
         skill.gameObject.SetActive(false);
         skill.transform.SetParent(transform);
-        _skillPools[skill.SkillID].Enqueue(skill);
+
+        pool.Enqueue(skill);
     }
 
     public SkillEffectBase GetEffect(SkillID id, SkillEffectBase prefab, Vector3 pos, Quaternion rot)

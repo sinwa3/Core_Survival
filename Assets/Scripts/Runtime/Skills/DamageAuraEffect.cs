@@ -14,13 +14,21 @@ public class DamageAuraEffect : SkillEffectBase
     [Header("데미지 간격")]
     [SerializeField] private float _damageInterval = 0.3f;
 
+    [Header("적 레이어")]
+    [SerializeField] private LayerMask _enemyMask = 1 << 6;
+
     [Header("플레이어")]
     [SerializeField] private Transform _playerTransform;
     #endregion
 
     #region 내부 변수
+    private SphereCollider _sphereCollider;
+    private Collider[] _hitBuffer = new Collider[128];
     private float _timer = 0.0f;
     #endregion
+
+    private float HitRadius => _sphereCollider.radius * transform.localScale.x;
+
     protected override void Awake()
     {
         base.Awake();
@@ -38,6 +46,15 @@ public class DamageAuraEffect : SkillEffectBase
                 Debug.LogWarning("Player 태그 오브젝트 찾을 수 없음");
             }
         }
+
+        _sphereCollider = GetComponent<SphereCollider>();
+
+        if (_sphereCollider == null)
+        {
+            Debug.LogWarning("콜라이더 null (DamageAuraEffect)");
+            
+            return;
+        }
     }
 
     
@@ -45,32 +62,14 @@ public class DamageAuraEffect : SkillEffectBase
     {
         base.OnSpawn();
 
+        _timer = _damageInterval;
         StartCoroutine(Co_Life(_lifeTime));
 
         // 플레이어 따라가기
         transform.SetParent(_playerTransform);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
-        {
-            IDamageable enemy = other.GetComponent<IDamageable>();
-
-            if (enemy != null)
-            {
-                enemy.TakeDamage(SkillDamage);
-
-                if (printLog)
-                {
-                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {SkillDamage}의 데미지");
-                }
-            }
-        }
-    }
-
-    // 지속 데미지
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
         if (_timer < _damageInterval)
         {
@@ -81,17 +80,37 @@ public class DamageAuraEffect : SkillEffectBase
 
         _timer = 0.0f;
 
-        if (!string.IsNullOrEmpty(other.tag) && other.CompareTag(_enemyTag))
+        TickDamage();
+    }
+
+    private void TickDamage()
+    {
+        if (_sphereCollider == null)
         {
-            IDamageable enemy = other.GetComponent<IDamageable>();
+            return;
+        }
 
-            if (enemy != null)
+        int count = Physics.OverlapSphereNonAlloc(transform.position, HitRadius, _hitBuffer, _enemyMask);
+
+        if (count == _hitBuffer.Length)
+        {
+            Debug.LogWarning("적 감지 최대 수에 도달 (DamageAuraEffect) / 이 이상은 피해 안받음");
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            if (_hitBuffer[i].CompareTag(_enemyTag))
             {
-                enemy.TakeDamage(SkillDamage);
+                IDamageable enemy = _hitBuffer[i].GetComponent<IDamageable>();
 
-                if (printLog)
+                if (enemy != null)
                 {
-                    Debug.Log($"{SkillID} 스킬로 {other.name}에게 {SkillDamage}의 데미지");
+                    enemy.TakeDamage(SkillDamage);
+
+                    if (printLog)
+                    {
+                        Debug.Log($"{SkillID} 스킬로 {_hitBuffer[i].name}에게 {SkillDamage}의 데미지");
+                    }
                 }
             }
         }

@@ -27,9 +27,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3321140147409854744}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.27566, y: 8.002199, z: 42.209023}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8827308461585221142}
@@ -52,7 +52,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 1.55
   m_Center: {x: 0, y: 0, z: 0}
@@ -71,6 +71,9 @@ MonoBehaviour:
   _lifeTime: 5
   _enemyTag: Enemy
   _damageInterval: 0.3
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 64
   _playerTransform: {fileID: 0}
 --- !u!82 &-2574743711244278158
 AudioSource:

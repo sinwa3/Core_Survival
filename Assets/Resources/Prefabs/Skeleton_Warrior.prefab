@@ -242,7 +242,7 @@ MonoBehaviour:
     maxHP: 100
     currentHP: 0
     attack: 10
-    exp: 500
+    exp: 50
   _attackRange: 2
   _attackInterval: 1
   _groundMask:

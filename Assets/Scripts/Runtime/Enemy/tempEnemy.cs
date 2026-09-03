@@ -47,6 +47,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [SerializeField] private string _paramDead = "tDead";
 
     [SerializeField] private float _deadDuration = 0.9f;
+
+    [Header("피격")]
+    [SerializeField] private Renderer[] _renderers;
+    [SerializeField] private Color _hitColor = Color.red;
+    [SerializeField] private float _flashDuration = 0.1f;
     #endregion
 
     #region 내부 변수
@@ -64,6 +69,12 @@ public class TempEnemy : MonoBehaviour, IDamageable
     private float _baseHP;
     private float _baseAttack;
     IDamageable _damageable;
+
+    private MaterialPropertyBlock _propertyBlock;
+    private float _flashUntil;
+    private bool _isFlashing;
+
+    private static readonly int HashColor = Shader.PropertyToID("_Color");
     #endregion
 
     public static event Action<TempEnemy> OnEnemyDead;
@@ -126,6 +137,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _hashRun = Animator.StringToHash(_paramRun);
         _hashAttack = Animator.StringToHash(_paramAttack);
         _hashDead = Animator.StringToHash(_paramDead);
+
+        RendererCaching();
     }
 
     void Update()
@@ -141,6 +154,7 @@ public class TempEnemy : MonoBehaviour, IDamageable
         TickAttack(toPlayer);
         TickMove(toPlayer);
         TickRotate(toPlayer);
+        TickFlash();
     }
 
     // 공격
@@ -168,6 +182,77 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _attackTimer = 0.0f;
         _isAttacking = true;
         _animator.SetTrigger(_hashAttack);
+    }
+
+    private void RendererCaching()
+    {
+        _renderers = GetComponentsInChildren<Renderer>(true);
+
+        if (_renderers.Length <= 0)
+        {
+            Debug.LogWarning("렌더러 없음 (TempEnemy) / 확인 요망");
+
+            return;
+        }
+
+        _propertyBlock = new MaterialPropertyBlock();
+    }
+
+    private void ApplyHitColor()
+    {
+        _propertyBlock.SetColor(HashColor, _hitColor);
+
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].SetPropertyBlock(_propertyBlock);
+        }
+    }
+
+    private void ResetColor()
+    {
+        if (_renderers == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].SetPropertyBlock(null);
+        }
+    }
+
+    private void PlayHitFlash()
+    {
+        if (_propertyBlock == null)
+        {
+            return;
+        }
+
+        _flashUntil = Time.time + _flashDuration;
+
+        if (_isFlashing)
+        {
+            return;
+        }
+
+        _isFlashing = true;
+        ApplyHitColor();
+    }
+
+    private void TickFlash()
+    {
+        if (!_isFlashing)
+        {
+            return;
+        }
+
+        if (Time.time < _flashUntil)
+        {
+            return;
+        }
+
+        _isFlashing = false;
+        ResetColor();
     }
 
     private Vector3 GetPushVector()
@@ -205,6 +290,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
         _stats.currentHP -= damage;
 
+        PlayHitFlash();
+
         if (_stats.currentHP <= 0)
         {
             OnEnemyDead?.Invoke(this);
@@ -216,19 +303,27 @@ public class TempEnemy : MonoBehaviour, IDamageable
     {
         IsActive = true;
         IsDead = false;
-        _stats.currentHP = _stats.maxHP;
         _isAttacking = false;
+
+        _stats.currentHP = _stats.maxHP;
         _attackTimer = 0.0f;
         _myCollider.enabled = true;
+
+        _isFlashing = false;
+        ResetColor();
     }
 
     public void OnDespawn()
     {
         IsActive = false;
         IsDead = true;
+
         _myCollider.enabled = false;
+
+        _isFlashing = false;
+        ResetColor();
     }
-    
+
     public void OnRecycle()
     {
         IsDead = false;

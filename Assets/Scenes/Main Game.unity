@@ -3557,7 +3557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 3100536405441559351, guid: 2a63d02319b0678498ad380ddc071372, type: 3}
-  _prewarmCount: 100
+  _prewarmCount: 120
 --- !u!4 &116784134
 Transform:
   m_ObjectHideFlags: 0
@@ -3630,6 +3630,46 @@ MonoBehaviour:
     spawnInterval: 1.5
     hpMulti: 2.5
     attackMulti: 2.5
+  - minEnemy: 55
+    spawnInterval: 1.5
+    hpMulti: 2.7
+    attackMulti: 2.6
+  - minEnemy: 60
+    spawnInterval: 1.5
+    hpMulti: 2.9
+    attackMulti: 2.7
+  - minEnemy: 65
+    spawnInterval: 1.2
+    hpMulti: 3.1
+    attackMulti: 2.8
+  - minEnemy: 70
+    spawnInterval: 1.2
+    hpMulti: 3.3
+    attackMulti: 2.9
+  - minEnemy: 75
+    spawnInterval: 1.2
+    hpMulti: 3.5
+    attackMulti: 3
+  - minEnemy: 78
+    spawnInterval: 1.2
+    hpMulti: 3.8
+    attackMulti: 3.1
+  - minEnemy: 81
+    spawnInterval: 1.1
+    hpMulti: 4.1
+    attackMulti: 3.2
+  - minEnemy: 84
+    spawnInterval: 1
+    hpMulti: 4.4
+    attackMulti: 3.3
+  - minEnemy: 87
+    spawnInterval: 1
+    hpMulti: 4.7
+    attackMulti: 3.4
+  - minEnemy: 90
+    spawnInterval: 1
+    hpMulti: 5
+    attackMulti: 3.5
   _waveDuration: 20
   _maxEnemy: 100
   _gameManager: {fileID: 841206366}

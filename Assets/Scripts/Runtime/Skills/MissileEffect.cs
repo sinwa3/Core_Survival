@@ -21,6 +21,8 @@ public class MissileEffect : SkillEffectBase
         StartCoroutine(Co_Life(_lifeTime));
     }
 
+
+
     void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * _moveSpeed);

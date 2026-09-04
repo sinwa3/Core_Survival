@@ -8,6 +8,7 @@ public class SkillUpgradeOptionSO : LevelUpOptionSO
     #region 인스펙터
     [Header("부분")]
     [SerializeField] private SkillDataSO _skillData;
+    [SerializeField] private EUpgradeType _upgradeType;
     #endregion
 
     public override Sprite Icon => _skillData != null ? _skillData.Icon : null;
@@ -35,7 +36,7 @@ public class SkillUpgradeOptionSO : LevelUpOptionSO
             return;
         }
 
-        skillManager.UpgradeSkill(_skillData.SkillID);
+        skillManager.UpgradeSkill(_skillData.SkillID, _upgradeType);
     }
     public override bool IsAvailable(SkillManager skillManager)
     {

@@ -10,7 +10,7 @@ public abstract class SkillsBase
     // 스킬 자체 정보
     public float SkillBaseDamage => skillData.BaseDamage;
     public int MaxUpgradeLevel => skillData.MaxUpgradeLevel;
-    public float SkillCooldown => skillData.Cooldown;
+    public float SkillCooldown => Mathf.Max(skillData.Cooldown / CooldownMultiplier, skillData.MinCooldown);
     protected float skillTimer = 0.0f;
 
     // 스킬 프리팹
@@ -22,10 +22,17 @@ public abstract class SkillsBase
     public virtual bool NeedTarget => true;
 
     private readonly SkillDataSO skillData;
-    public int CurrentSkillLevel { get; protected set; } = 1;
-    public bool CanSkillUpgrade => CurrentSkillLevel < MaxUpgradeLevel;
 
-    public float DamageMultiplier => 1.0f + (skillData.DamagePerLevel * (CurrentSkillLevel - 1));
+    protected int damageLevel = 0;
+    protected int cooldownLevel = 0;
+
+    public int DamageLevel => damageLevel;
+    public int CooldownLevel => cooldownLevel;
+
+    public bool CanSkillUpgrade => damageLevel + cooldownLevel < MaxUpgradeLevel;
+
+    public float DamageMultiplier => 1.0f + (skillData.DamagePerLevel * DamageLevel);
+    public float CooldownMultiplier => 1.0f + (skillData.CooldownPerLevel * CooldownLevel);
 
     protected int EffectCountPerCast => skillData.EffectCountPerCast;
 
@@ -81,16 +88,28 @@ public abstract class SkillsBase
         return SkillBaseDamage * DamageMultiplier * player.PlayerStats.attack;
     }
 
-    public void UpgradeSkill()
+    public void UpgradeSkill(EUpgradeType type)
     {
         if (!CanSkillUpgrade)
         {
-            Debug.LogWarning($"스킬 {SkillID} 업그레이드 불가 / 현재 레벨 {CurrentSkillLevel} / 최대 레벨 {MaxUpgradeLevel}");
+            Debug.LogWarning($"스킬 {SkillID} 업그레이드 불가 / 데미지 레벨 {damageLevel}, 쿨다운 레벨 {cooldownLevel} / 최대 레벨 {MaxUpgradeLevel}");
 
             return;
         }
 
-        CurrentSkillLevel++;
+        switch (type)
+        {
+            case EUpgradeType.Damage:
+                damageLevel++;
+                break;
+            case EUpgradeType.Cooldown:
+                cooldownLevel++;
+                break;
+            default:
+                Debug.LogWarning("스킬 업그레이드 타입 찾을 수 없음 (SkillsBase)");
+                break;
+        }
+        
     }
 
 

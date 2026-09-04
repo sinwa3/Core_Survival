@@ -15,6 +15,10 @@ MonoBehaviour:
   _skillID: 2
   _icon: {fileID: 21300000, guid: ab84d013438f84c41aef7c0ad9337a37, type: 3}
   _effectPrefab: {fileID: 6824115720190266673, guid: b8c3570181eff19418e7aad72578be96, type: 3}
-  _cooldown: 7
+  _effectCountPerCast: 1
   _baseDamage: 5
   _maxUpgradeLevel: 5
+  _damagePerLevel: 0.2
+  _cooldown: 7
+  _cooldownPerLevel: 0.2
+  _minCooldown: 5

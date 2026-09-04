@@ -12,7 +12,7 @@ public abstract class SkillEffectBase : MonoBehaviour
     public bool printLog
     {
         get; protected set;
-    } = true;
+    } = false;
 
     #region 내부 변수
     private SkillEffectPooling _ownerPool;

@@ -124,7 +124,7 @@ public class SkillManager : MonoBehaviour
         return LearnSkill(skill);
     }
 
-    public void UpgradeSkill(SkillID skillID)
+    public void UpgradeSkill(SkillID skillID, EUpgradeType type)
     {
         if (!_skillDict.TryGetValue(skillID, out SkillsBase skill))
         {
@@ -133,7 +133,7 @@ public class SkillManager : MonoBehaviour
             return;
         }
 
-        skill.UpgradeSkill();
+        skill.UpgradeSkill(type);
     }
 
     public bool CanUpgradeSkill(SkillID skillID)

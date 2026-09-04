@@ -82,14 +82,7 @@ public class EnemyScanner : MonoBehaviour
     {
         if (enemy == null)
         {
-            Debug.LogWarning("리스트 지우기 불가 / 적 null");
-
-            return;
-        }
-
-        if (!_enemyNearList.Contains(enemy.transform))
-        {
-            Debug.LogWarning("리스트 지우기 불가 / 리스트에 없음");
+            Debug.LogWarning("리스트 지우기 불가 / 적 null"); 
 
             return;
         }
@@ -104,12 +97,10 @@ public class EnemyScanner : MonoBehaviour
             if (!_enemyNearList.Contains(other.transform))
             {
                 _enemyNearList.Add(other.transform);
+#if UNITY_EDITOR
                 Debug.Log($"주변 적에 {other.name} 추가 / 현재 주변 적 {_enemyNearList.Count}");
-
-                return;
+#endif
             }
-
-            Debug.LogWarning("이미 추가됨");
         }
     }
 }

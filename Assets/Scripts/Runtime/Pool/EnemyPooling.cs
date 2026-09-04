@@ -9,6 +9,9 @@ public class EnemyPooling : MonoBehaviour
     [Header("풀링 옵션")]
     [SerializeField] private TempEnemy _enemyPrefab;
     [SerializeField] private int _prewarmCount = 100;
+
+    [Header("측정용")]
+    [SerializeField] private bool _usePool = true;
     #endregion
 
     #region 내부 변수
@@ -23,7 +26,10 @@ public class EnemyPooling : MonoBehaviour
 
     private void Awake()
     {
-        EnemyPrewarm();
+        if (_usePool)
+        {
+            EnemyPrewarm();
+        }
     }
 
     // 프리웜
@@ -66,7 +72,7 @@ public class EnemyPooling : MonoBehaviour
 
         TempEnemy enemy;
 
-        enemy = (_enemyPool.Count > 0) ? _enemyPool.Dequeue() : CreateEnemy();
+        enemy = (_enemyPool.Count > 0 && _usePool) ? _enemyPool.Dequeue() : CreateEnemy();
 
         enemy.transform.SetPositionAndRotation(pos, rot);
         enemy.gameObject.SetActive(true);
@@ -111,6 +117,13 @@ public class EnemyPooling : MonoBehaviour
 
         if (!enemy.IsDead)
         {
+            return;
+        }
+
+        if (!_usePool)
+        {
+            Destroy(enemy.gameObject);
+
             return;
         }
 

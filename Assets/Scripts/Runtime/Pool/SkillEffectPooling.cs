@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class SkillEffectPooling : MonoBehaviour
 {
+    #region 인스펙터
+    [Header("측정용")]
+    [SerializeField] private bool _usePool = true;
+    #endregion
 
     #region 내부 변수
     private Dictionary<SkillID, Queue<SkillEffectBase>> _skillPools = new Dictionary<SkillID, Queue<SkillEffectBase>>();
     #endregion
 
     public void ReturnSkillEffectPool(SkillEffectBase skill)
-    {
+    { 
         if (skill == null)
         {
             Debug.LogWarning("스킬 반환 불가 / null인 스킬");
+
+            return;
+        }
+
+        if (!_usePool)
+        {
+            Destroy(skill.gameObject);
 
             return;
         }
@@ -50,7 +61,7 @@ public class SkillEffectPooling : MonoBehaviour
             _skillPools.Add(id, pool);
         }
 
-        skillEffect = (pool.Count > 0) ? pool.Dequeue() : Instantiate(prefab, transform);
+        skillEffect = (pool.Count > 0 && _usePool) ? pool.Dequeue() : Instantiate(prefab, transform);
 
         skillEffect.transform.SetPositionAndRotation(pos, rot);
         skillEffect.SetOwnerPool(this);

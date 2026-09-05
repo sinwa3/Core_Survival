@@ -3559,6 +3559,7 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 3100536405441559351, guid: 2a63d02319b0678498ad380ddc071372, type: 3}
   _prewarmCount: 120
   _usePool: 1
+  _damageTextPool: {fileID: 2082219066}
 --- !u!4 &116784134
 Transform:
   m_ObjectHideFlags: 0
@@ -63905,6 +63906,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2274762423309498560, guid: 3acbc0e25f1432240afc6fe4b89a644e, type: 3}
   m_PrefabInstance: {fileID: 315799197}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2082219065
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2082219067}
+  - component: {fileID: 2082219066}
+  m_Layer: 0
+  m_Name: DamageTextPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2082219066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082219065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110ca5f78b733f540b8b8bdeb0195393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageTextPrefab: {fileID: 727334781696541953, guid: 218d33dda9eebea4a873b32aed94768f, type: 3}
+  _prewarmCount: 40
+  _usePool: 1
+--- !u!4 &2082219067
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082219065}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1007.37256, y: 458.68857, z: 5.819286}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2082930269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2732822298258720226, guid: 64b67f1e798528c479300da48b5b3300, type: 3}
@@ -65868,3 +65916,4 @@ SceneRoots:
   - {fileID: 841206367}
   - {fileID: 485522125}
   - {fileID: 1417858534}
+  - {fileID: 2082219067}

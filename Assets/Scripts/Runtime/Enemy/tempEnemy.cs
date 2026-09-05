@@ -75,6 +75,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
     private bool _isFlashing;
 
     private static readonly int HashColor = Shader.PropertyToID("_Color");
+
+    private DamageTextPooling _damageTextPool;
     #endregion
 
     public static event Action<TempEnemy> OnEnemyDead;
@@ -292,6 +294,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
         PlayHitFlash();
 
+        if (_damageTextPool != null)
+        {
+            _damageTextPool.GetDamageText(damage, transform.position);
+        }
+
         if (_stats.currentHP <= 0)
         {
             OnEnemyDead?.Invoke(this);
@@ -364,6 +371,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
     public void SetOwnerPool(EnemyPooling pool)
     {
         _ownerPool = pool;
+    }
+
+    public void SetDamageTextPool(DamageTextPooling pool)
+    {
+        _damageTextPool = pool;
     }
 
     // 애니메이터 이벤트용

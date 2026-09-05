@@ -12,6 +12,9 @@ public class EnemyPooling : MonoBehaviour
 
     [Header("측정용")]
     [SerializeField] private bool _usePool = true;
+
+    [Header("데미지 텍스트")]
+    [SerializeField] private DamageTextPooling _damageTextPool;
     #endregion
 
     #region 내부 변수
@@ -29,6 +32,11 @@ public class EnemyPooling : MonoBehaviour
         if (_usePool)
         {
             EnemyPrewarm();
+        }
+
+        if (_damageTextPool == null)
+        {
+            Debug.LogWarning("데미지 풀 null (EnemyPooling)/ 데미지 표시 불가 / 인스펙터 확인");
         }
     }
 
@@ -55,6 +63,7 @@ public class EnemyPooling : MonoBehaviour
         TempEnemy enemy = Instantiate(_enemyPrefab, transform);
 
         enemy.SetOwnerPool(this);
+        enemy.SetDamageTextPool(_damageTextPool);
         enemy.gameObject.SetActive(false);
 
         return enemy;

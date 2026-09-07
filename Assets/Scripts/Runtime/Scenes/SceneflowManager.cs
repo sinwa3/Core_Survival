@@ -83,19 +83,6 @@ public class SceneflowManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Q))
-        {
-            LoadPrevScene();
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.E))
-        {
-            LoadNextScene();
-        }
-    }
-
     private void SetCurrentSceneIndex()
     {
         IReadOnlyList<SceneInfo> scenes = _catalog.Scenes;

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelUpPanel : MenuPanelBase
 {
@@ -20,11 +22,35 @@ public class LevelUpPanel : MenuPanelBase
 
     [Header("플레이어")]
     [SerializeField] private Player _player;
+
+    [Header("리롤")]
+    [SerializeField] private int _maxRerollCount = 4;
+    [SerializeField] private Button _rerollButton;
+    [SerializeField] private TMP_Text _rerollCountText;
     #endregion
+
+    #region 내부 변수
+    private int _rerollCount;
+    #endregion
+
+    protected override void Start()
+    {
+        base.Start();
+
+        _rerollCount = _maxRerollCount;
+        UpdateRerollUI();
+    }
 
     protected override void Show()
     {
         base.Show();
+        
+
+        RollOptions();
+    }
+
+    private void RollOptions()
+    {
         List<LevelUpOptionSO> options = GetOptions();
 
         if (options.Count == 0)
@@ -49,6 +75,32 @@ public class LevelUpPanel : MenuPanelBase
 
             _options[i].Setup(options[index], OptionClicked);
             options.RemoveAt(index);
+        }
+    }
+
+    public void Reroll()
+    {
+        if (_rerollCount <= 0)
+        {
+            return;
+        }
+
+        _rerollCount--;
+
+        RollOptions();
+        UpdateRerollUI();
+    }
+
+    private void UpdateRerollUI()
+    {
+        if (_rerollCountText != null)
+        {
+            _rerollCountText.text = $"{_rerollCount} / {_maxRerollCount}";
+        }
+
+        if (_rerollButton != null)
+        {
+            _rerollButton.interactable = (_rerollCount > 0);
         }
     }
 

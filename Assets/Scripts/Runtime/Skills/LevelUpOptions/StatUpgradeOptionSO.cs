@@ -5,7 +5,8 @@ public enum EStatType
     None,
     MaxHP,
     Speed,
-    Attack
+    Attack,
+    CritChance
 }
 
 [CreateAssetMenu(fileName = "StatOptionSO", menuName = "코어 서바이벌/레벨업 선택지/스탯 강화")]
@@ -39,6 +40,9 @@ public class StatUpgradeOptionSO : LevelUpOptionSO
                 break;
             case EStatType.Attack:
                 player.IncreaseAttack(_statAmount);
+                break;
+            case EStatType.CritChance:
+                player.IncreaseCritChance(_statAmount);
                 break;
             default:
                 Debug.LogWarning($"스탯 타입 미설정 / {OptionName} 에셋 확인 요망");

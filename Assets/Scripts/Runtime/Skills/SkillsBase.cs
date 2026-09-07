@@ -85,7 +85,14 @@ public abstract class SkillsBase
             return SkillBaseDamage * DamageMultiplier;
         }
 
-        return SkillBaseDamage * DamageMultiplier * player.PlayerStats.attack;
+        float damage = SkillBaseDamage * DamageMultiplier * player.PlayerStats.attack;
+
+        if (Random.value < player.CritChance)
+        {
+            damage *= player.CritMulti;
+        }
+
+        return damage;
     }
 
     public void UpgradeSkill(EUpgradeType type)

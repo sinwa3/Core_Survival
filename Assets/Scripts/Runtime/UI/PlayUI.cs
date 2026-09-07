@@ -57,6 +57,7 @@ public class PlayUI : MonoBehaviour
         if (_canvasGroup == null)
         {
             Debug.LogWarning("캔버스 그룹 null / 확인 요망");
+            enabled = false;
 
             return;
         }
@@ -64,6 +65,7 @@ public class PlayUI : MonoBehaviour
         if (_player == null)
         {
             Debug.LogWarning("플레이어 스크립트 연결 안됨 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }
@@ -71,6 +73,7 @@ public class PlayUI : MonoBehaviour
         if (_playerLevel == null)
         {
             Debug.LogWarning("플레이어 레벨 스크립트 연결 안됨 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }
@@ -78,6 +81,7 @@ public class PlayUI : MonoBehaviour
         if (_hpBar == null)
         {
             Debug.LogWarning("경험치 바 이미지 없음 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }
@@ -85,6 +89,7 @@ public class PlayUI : MonoBehaviour
         if (_expBar == null)
         {
             Debug.LogWarning("경험치 바 이미지 없음 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }
@@ -92,6 +97,7 @@ public class PlayUI : MonoBehaviour
         if (_levelText == null)
         {
             Debug.LogWarning("레벨 텍스트 연결 안됨 / 인스펙터 확인");
+            enabled = false;
 
             return;
         }
@@ -103,6 +109,8 @@ public class PlayUI : MonoBehaviour
         _hpBar.fillAmount = _player.HpRatio;
 
         _previousLevel = _playerLevel.Level;
+
+        ApplyLevel();
     }
 
     void Update()

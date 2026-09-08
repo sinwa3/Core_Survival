@@ -154,9 +154,22 @@ public class TempEnemy : MonoBehaviour, IDamageable
         toPlayer.y = 0.0f;
 
         TickAttack(toPlayer);
+        
+        TickFlash();
+    }
+
+    private void FixedUpdate()
+    {
+        if (IsDead)
+        {
+            return;
+        }
+
+        Vector3 toPlayer = (_playerTransform.position - transform.position);
+        toPlayer.y = 0.0f;
+
         TickMove(toPlayer);
         TickRotate(toPlayer);
-        TickFlash();
     }
 
     // 공격

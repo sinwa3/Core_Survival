@@ -26,6 +26,10 @@ public class PlayUI : MonoBehaviour
 
     [Header("게임 매니저")]
     [SerializeField] private GameManager _gameManager;
+
+    [Header("대시")]
+    [SerializeField] private TopViewPlayerControl _playerControl;
+    [SerializeField] private Image _dashCooldownImage;
     #endregion
 
     #region 내부 변수
@@ -101,6 +105,22 @@ public class PlayUI : MonoBehaviour
 
             return;
         }
+
+        if (_playerControl == null)
+        {
+            Debug.LogWarning("플레이어 컨트롤 null (PlayUI) / 인스펙터 확인");
+            enabled = false;
+
+            return;
+        }
+
+        if (_dashCooldownImage == null)
+        {
+            Debug.LogWarning("대시 이미지 없음 (PlayUI) / 인스펙터 확인");
+            enabled = false;
+
+            return;
+        }
     }
 
     void Start()
@@ -124,6 +144,8 @@ public class PlayUI : MonoBehaviour
 
         _hpBar.fillAmount = Mathf.Lerp(_hpBar.fillAmount, _player.HpRatio, 4.0f * Time.deltaTime);
 
+
+
         if (Mathf.Abs(_player.HpRatio - _hpBar.fillAmount) < 0.001f)
         {
             _hpBar.fillAmount = _player.HpRatio;
@@ -133,6 +155,8 @@ public class PlayUI : MonoBehaviour
         {
             ApplyLevel();
         }
+
+        _dashCooldownImage.fillAmount = _playerControl.CooldownRemainRatio;
         
     }
 

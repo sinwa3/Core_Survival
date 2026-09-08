@@ -45,6 +45,8 @@ public class TopViewPlayerControl : MonoBehaviour
     private int _hashDash;
     #endregion
 
+    public float CooldownRemainRatio => _dashCooltime > 0 ? Mathf.Clamp01((_dashUseTime + _dashCooltime - Time.time) / _dashCooltime) : 0.0f;
+
     private void Reset()
     {
         _control = GetComponent<CharacterController>();

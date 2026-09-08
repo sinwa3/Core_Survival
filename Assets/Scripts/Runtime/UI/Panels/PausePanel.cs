@@ -13,6 +13,7 @@ public class PausePanel : MenuPanelBase
     [SerializeField] private TMP_Text _health;
     [SerializeField] private TMP_Text _attackRatio;
     [SerializeField] private TMP_Text _speedRatio;
+    [SerializeField] private TMP_Text _critRatio;
 
     [Header("플레이어 스탯")]
     [SerializeField] private Player _player;
@@ -67,6 +68,7 @@ public class PausePanel : MenuPanelBase
         _health.text = $"{_player.PlayerStats.maxHP:0}";
         _attackRatio.text = $"{_player.PlayerStats.attack * 100:0}%";
         _speedRatio.text = $"{_player.PlayerStats.speed * 100:0}%";
+        _critRatio.text = $"{_player.CritChance * 100:0}% (x{_player.CritMulti:0.0})";
 
         if (_skillManager == null)
         {

@@ -16,11 +16,6 @@ public class TitleButtonControl : MonoBehaviour
         SceneflowManager.instance.LoadNextScene();
     }
 
-    public void OnClickOption()
-    {
-        Debug.Log("옵션 버튼 눌림");
-    }
-
     public void OnClickQuit()
     {
 #if UNITY_EDITOR

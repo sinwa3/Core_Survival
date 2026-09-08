@@ -7,6 +7,8 @@ public class Boot : MonoBehaviour
 {
     void Start()
     {
+        SoundOption.LoadVolume();
+
         if (SceneflowManager.instance == null)
         {
             Debug.LogWarning("씬 플로우 매니저 인스턴스 없음 / 확인 요망");

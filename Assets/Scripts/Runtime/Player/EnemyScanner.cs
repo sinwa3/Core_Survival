@@ -52,7 +52,12 @@ public class EnemyScanner : MonoBehaviour
     {
         float range = _scanCollider.radius + 1.0f;
 
-        _enemyNearList.RemoveAll(enemy => enemy == null || Vector3.Distance(enemy.position, transform.position) > range);
+        _enemyNearList.RemoveAll
+            (
+            enemy => enemy == null ||
+            Vector3.Distance(enemy.position, transform.position) > range ||
+            !enemy.gameObject.activeSelf
+            );
 
         if (_enemyNearList.Count == 0)
         {

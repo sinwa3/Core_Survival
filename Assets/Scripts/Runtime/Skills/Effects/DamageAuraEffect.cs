@@ -19,6 +19,7 @@ public class DamageAuraEffect : SkillEffectBase
 
     [Header("플레이어")]
     [SerializeField] private Transform _playerTransform;
+
     #endregion
 
     #region 내부 변수

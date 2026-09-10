@@ -3655,7 +3655,7 @@ GameObject:
   - component: {fileID: 116784133}
   - component: {fileID: 116784135}
   m_Layer: 0
-  m_Name: EnemyPool
+  m_Name: EnemyPool1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3677,6 +3677,7 @@ MonoBehaviour:
   _prewarmCount: 120
   _usePool: 1
   _damageTextPool: {fileID: 2082219066}
+  _attackPool: {fileID: 0}
 --- !u!4 &116784134
 Transform:
   m_ObjectHideFlags: 0
@@ -3721,71 +3722,71 @@ MonoBehaviour:
     spawnInterval: 2
     hpMulti: 1.5
     attackMulti: 1.5
-  - minEnemy: 15
+  - minEnemy: 13
     spawnInterval: 2
     hpMulti: 1.5
     attackMulti: 1.5
-  - minEnemy: 20
+  - minEnemy: 16
     spawnInterval: 2
     hpMulti: 1.7
     attackMulti: 1.7
-  - minEnemy: 25
+  - minEnemy: 19
     spawnInterval: 1.5
     hpMulti: 1.7
     attackMulti: 1.7
-  - minEnemy: 30
+  - minEnemy: 23
     spawnInterval: 1.5
     hpMulti: 2
     attackMulti: 2
-  - minEnemy: 35
+  - minEnemy: 28
     spawnInterval: 1.5
     hpMulti: 2.2
     attackMulti: 2.2
-  - minEnemy: 40
+  - minEnemy: 33
     spawnInterval: 1.5
     hpMulti: 2.5
     attackMulti: 2.5
-  - minEnemy: 50
+  - minEnemy: 38
     spawnInterval: 1.5
     hpMulti: 2.5
     attackMulti: 2.5
-  - minEnemy: 55
+  - minEnemy: 43
     spawnInterval: 1.5
     hpMulti: 2.7
     attackMulti: 2.6
-  - minEnemy: 60
+  - minEnemy: 45
     spawnInterval: 1.5
     hpMulti: 2.9
     attackMulti: 2.7
-  - minEnemy: 65
+  - minEnemy: 50
     spawnInterval: 1.2
     hpMulti: 3.1
     attackMulti: 2.8
-  - minEnemy: 70
+  - minEnemy: 55
     spawnInterval: 1.2
     hpMulti: 3.3
     attackMulti: 2.9
-  - minEnemy: 75
+  - minEnemy: 59
     spawnInterval: 1.2
     hpMulti: 3.5
     attackMulti: 3
-  - minEnemy: 78
+  - minEnemy: 63
     spawnInterval: 1.2
     hpMulti: 3.8
     attackMulti: 3.1
-  - minEnemy: 81
+  - minEnemy: 67
     spawnInterval: 1.1
     hpMulti: 4.1
     attackMulti: 3.2
-  - minEnemy: 84
+  - minEnemy: 70
     spawnInterval: 1
     hpMulti: 4.4
     attackMulti: 3.3
-  - minEnemy: 87
+  - minEnemy: 73
     spawnInterval: 1
     hpMulti: 4.7
     attackMulti: 3.4
-  - minEnemy: 90
+  - minEnemy: 75
     spawnInterval: 1
     hpMulti: 5
     attackMulti: 3.5
@@ -32024,6 +32025,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1167548882203215460, guid: efadd1ea6364a89448507b4ec9158b9b, type: 3}
   m_PrefabInstance: {fileID: 1869149809}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1074713773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1074713775}
+  - component: {fileID: 1074713774}
+  m_Layer: 0
+  m_Name: EnemyAttackPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1074713774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074713773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e01449559eabd409ce9d01a037b7dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackPrefab: {fileID: 8331312045600926033, guid: 8a189b9acccad0c43b3acf2e3a0ed864, type: 3}
+  _prewarmCount: 50
+  _usePool: 1
+--- !u!4 &1074713775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074713773}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.012802, y: -153.20872, z: -50.308125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1075792304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47239,14 +47287,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2efe3b07d894ad4899568563775cb60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _POV: 2
   _target: {fileID: 129294313}
   _camera: {fileID: 0}
-  _cameraOffset: {x: 0, y: 2, z: -5}
-  _firstOffset: {x: 0, y: 1, z: 0.5}
   _topOffset: {x: 0, y: 10, z: -4}
-  _sensitive: 3
-  _cameraLookHeight: 1.2
   _sharpness: 4
 --- !u!4 &1519469603
 Transform:
@@ -62212,6 +62255,116 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1167548882203215460, guid: efadd1ea6364a89448507b4ec9158b9b, type: 3}
   m_PrefabInstance: {fileID: 862403220}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2001524743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001524746}
+  - component: {fileID: 2001524745}
+  - component: {fileID: 2001524744}
+  m_Layer: 0
+  m_Name: EnemyPool2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2001524744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001524743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1768ed5135623fe4ba4dfc748c7c51b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pool: {fileID: 2001524745}
+  _playerTr: {fileID: 129294313}
+  _minRange: 10
+  _maxRange: 20
+  _waveData:
+  - minEnemy: 0
+    spawnInterval: 2
+    hpMulti: 1
+    attackMulti: 1
+  - minEnemy: 0
+    spawnInterval: 2
+    hpMulti: 1.3
+    attackMulti: 1.3
+  - minEnemy: 0
+    spawnInterval: 2
+    hpMulti: 1.5
+    attackMulti: 1.5
+  - minEnemy: 2
+    spawnInterval: 2
+    hpMulti: 1.5
+    attackMulti: 1.5
+  - minEnemy: 4
+    spawnInterval: 2
+    hpMulti: 1.5
+    attackMulti: 1.5
+  - minEnemy: 6
+    spawnInterval: 1.5
+    hpMulti: 1.8
+    attackMulti: 1.8
+  - minEnemy: 8
+    spawnInterval: 1.5
+    hpMulti: 2.2
+    attackMulti: 2
+  - minEnemy: 10
+    spawnInterval: 1.5
+    hpMulti: 2.5
+    attackMulti: 2
+  - minEnemy: 12
+    spawnInterval: 1.3
+    hpMulti: 2.8
+    attackMulti: 2
+  - minEnemy: 14
+    spawnInterval: 1
+    hpMulti: 3
+    attackMulti: 2
+  _waveDuration: 30
+  _maxEnemy: 20
+  _gameManager: {fileID: 841206366}
+--- !u!114 &2001524745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001524743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f5b0cb2ad71664f9d43250a2bcf3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPrefab: {fileID: 6025257149903869114, guid: e01dc8755255f2b40b0eb5d74d900c82, type: 3}
+  _prewarmCount: 30
+  _usePool: 1
+  _damageTextPool: {fileID: 2082219066}
+  _attackPool: {fileID: 1074713774}
+--- !u!4 &2001524746
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001524743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.621345, y: 18.966656, z: 40.95942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2002279791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5713741381330463827, guid: 8cbd961abccc64d4f85813e5d32178cc, type: 3}
@@ -66409,6 +66562,7 @@ SceneRoots:
   - {fileID: 1233145416}
   - {fileID: 129294310}
   - {fileID: 116784134}
+  - {fileID: 2001524746}
   - {fileID: 604673694}
   - {fileID: 1732950751}
   - {fileID: 1098043691}
@@ -66417,3 +66571,4 @@ SceneRoots:
   - {fileID: 485522125}
   - {fileID: 1417858534}
   - {fileID: 2082219067}
+  - {fileID: 1074713775}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +14,10 @@ public class EnemyPooling : MonoBehaviour
 
     [Header("데미지 텍스트")]
     [SerializeField] private DamageTextPooling _damageTextPool;
+
+    [Header("적 공격 풀")]
+    [Tooltip("원거리 적에게 붙이기")]
+    [SerializeField] private EnemyAttackPooling _attackPool;
     #endregion
 
     #region 내부 변수
@@ -37,6 +40,11 @@ public class EnemyPooling : MonoBehaviour
         if (_damageTextPool == null)
         {
             Debug.LogWarning("데미지 풀 null (EnemyPooling)/ 데미지 표시 불가 / 인스펙터 확인");
+        }
+
+        if (_enemyPrefab != null && _enemyPrefab.AttackType == EEnemyAttackType.Ranged && _attackPool == null)
+        {
+            Debug.LogWarning("원거리 적 공격 풀 null (EnemyPooling) / 공격 불가");
         }
     }
 
@@ -64,6 +72,7 @@ public class EnemyPooling : MonoBehaviour
 
         enemy.SetOwnerPool(this);
         enemy.SetDamageTextPool(_damageTextPool);
+        enemy.SetAttackPool(_attackPool);
         enemy.gameObject.SetActive(false);
 
         return enemy;

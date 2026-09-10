@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
+
+public enum EEnemyAttackType
+{
+    Melee = 0,
+    Ranged = 1
+}
 
 [Serializable]
 public class EnemyStats
@@ -29,6 +33,9 @@ public class TempEnemy : MonoBehaviour, IDamageable
     [Header("공격")]
     [SerializeField] private float _attackRange = 2.0f;
     [SerializeField] private float _attackInterval = 1.0f;
+    [SerializeField] private EEnemyAttackType _attackType = EEnemyAttackType.Melee;
+    [Tooltip("원거리용")]
+    [SerializeField] private Transform _firePoint;
 
     [Header("땅")]
     [SerializeField] private LayerMask _groundMask = 1 << 7;
@@ -77,9 +84,11 @@ public class TempEnemy : MonoBehaviour, IDamageable
     private static readonly int HashColor = Shader.PropertyToID("_Color");
 
     private DamageTextPooling _damageTextPool;
+    private EnemyAttackPooling _attackPool;
     #endregion
 
     public static event Action<TempEnemy> OnEnemyDead;
+    public EEnemyAttackType AttackType => _attackType;
 
     public EnemyStats Stats => _stats;
 
@@ -386,6 +395,12 @@ public class TempEnemy : MonoBehaviour, IDamageable
         _ownerPool = pool;
     }
 
+    // 원거리 적 공격 풀 설정
+    public void SetAttackPool(EnemyAttackPooling pool)
+    {
+        _attackPool = pool;
+    }
+
     public void SetDamageTextPool(DamageTextPooling pool)
     {
         _damageTextPool = pool;
@@ -393,6 +408,22 @@ public class TempEnemy : MonoBehaviour, IDamageable
 
     // 애니메이터 이벤트용
     public void OnAttackHit()
+    {
+        switch (_attackType)
+        {
+            case EEnemyAttackType.Melee:
+                MeleeHit();
+                break;
+            case EEnemyAttackType.Ranged:
+                FireHit();
+                break;
+            default:
+                Debug.LogWarning($"공격 타입 미설정 ({name}) / 확인 요망");
+                break;
+        }
+    }
+
+    private void MeleeHit()
     {
         if (_damageable == null)
         {
@@ -417,6 +448,41 @@ public class TempEnemy : MonoBehaviour, IDamageable
         }
 
         _damageable.TakeDamage(_stats.attack);
+    }
+
+    private void FireHit()
+    {
+        if (_attackPool == null)
+        {
+            return;
+        }
+
+        if (_playerTransform == null)
+        {
+            Debug.LogWarning("플레이어 트랜스폼 null (TempEnemy) / 확인 요망");
+
+            return;
+        }
+
+        Vector3 dir = _playerTransform.position - transform.position;
+        dir.y = 0.0f;
+
+        if (dir.sqrMagnitude < 0.0001f)
+        {
+            return;
+        }
+
+        Quaternion rot = Quaternion.LookRotation(dir);
+
+        Transform fire = _firePoint != null ? _firePoint : transform;
+        EnemyRangeAttackEffect attack = _attackPool.GetAttack(fire.position, rot);
+
+        if (attack == null)
+        {
+            return;
+        }
+
+        attack.SetDamage(_stats.attack);
     }
 
     // 애니메이터 이벤트용

@@ -11,8 +11,6 @@ public class Camera_Basic : MonoBehaviour
 
     [Header("카메라 관련 설정")]
     [SerializeField] private Vector3 _topOffset = new Vector3(0.0f, 10.0f, -2.0f);
-    [SerializeField] private float _sensitive = 3.0f;
-    [SerializeField] private float _cameraLookHeight = 1.2f;
 
     [Header("샤프니스")]
     [Min(0.1f)]
@@ -20,8 +18,6 @@ public class Camera_Basic : MonoBehaviour
     #endregion
 
     private Transform _camTr;
-    private float _orbitYaw;
-    private float _orbitPitch;
 
     private void Awake()
     {
@@ -38,12 +34,6 @@ public class Camera_Basic : MonoBehaviour
         }
 
         _camTr = _camera.transform;
-    }
-
-    void Start()
-    {
-        _orbitYaw = 0.0f;
-        _orbitPitch = 10.0f;
     }
 
     void LateUpdate()

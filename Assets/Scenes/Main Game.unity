@@ -62304,31 +62304,31 @@ MonoBehaviour:
     attackMulti: 1.5
   - minEnemy: 2
     spawnInterval: 2
-    hpMulti: 1.5
-    attackMulti: 1.5
+    hpMulti: 1
+    attackMulti: 1
   - minEnemy: 4
     spawnInterval: 2
-    hpMulti: 1.5
-    attackMulti: 1.5
+    hpMulti: 1.3
+    attackMulti: 1.3
   - minEnemy: 6
     spawnInterval: 1.5
-    hpMulti: 1.8
-    attackMulti: 1.8
+    hpMulti: 1.6
+    attackMulti: 1.6
   - minEnemy: 8
+    spawnInterval: 1.5
+    hpMulti: 1.9
+    attackMulti: 1.9
+  - minEnemy: 10
     spawnInterval: 1.5
     hpMulti: 2.2
     attackMulti: 2
-  - minEnemy: 10
-    spawnInterval: 1.5
-    hpMulti: 2.5
-    attackMulti: 2
   - minEnemy: 12
     spawnInterval: 1.3
-    hpMulti: 2.8
+    hpMulti: 2.5
     attackMulti: 2
   - minEnemy: 14
     spawnInterval: 1
-    hpMulti: 3
+    hpMulti: 2.8
     attackMulti: 2
   _waveDuration: 30
   _maxEnemy: 20

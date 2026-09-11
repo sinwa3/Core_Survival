@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EEnemyAttackType
@@ -475,7 +476,8 @@ public class TempEnemy : MonoBehaviour, IDamageable
         Quaternion rot = Quaternion.LookRotation(dir);
 
         Transform fire = _firePoint != null ? _firePoint : transform;
-        EnemyRangeAttackEffect attack = _attackPool.GetAttack(fire.position, rot);
+        
+        EnemyRangeAttackEffect attack = _attackPool.GetAttack(fire.position + new Vector3(0.0f, 0.5f, 0.0f), rot);
 
         if (attack == null)
         {

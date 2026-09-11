@@ -293,7 +293,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _groundCheckHeight: 2
-  _groundOffset: 0.5
+  _groundOffset: 0
   _enemyMask:
     serializedVersion: 2
     m_Bits: 64

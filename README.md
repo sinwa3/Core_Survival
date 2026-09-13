@@ -12,7 +12,7 @@
 | **플랫폼** | PC (Windows) |
 | **성격** | 부트캠프 미니 프로젝트 겸 포트폴리오 |
 
-**▶ [시연 영상](링크)** · **📄 [기술 문서](링크)** · **⬇ [빌드 다운로드](https://github.com/sinwa3/Core_Survival/releases/tag/v1.0.2)**
+**▶ [시연 영상](https://youtu.be/vvMjzs2GKko)** · **📄 [기술 문서](링크)** · **⬇ [빌드 다운로드](https://github.com/sinwa3/Core_Survival/releases/tag/v1.0.2)**
 
 <!-- 이미지 넣을 자리: docs/ 폴더를 만들고 플레이 화면 캡처를 넣은 뒤 아래 주석을 푼다
 ![플레이 화면](docs/play.png)
